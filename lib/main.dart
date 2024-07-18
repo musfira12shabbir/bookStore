@@ -1,4 +1,6 @@
 
+import 'package:eproject/admin/add_book_screen.dart';
+import 'package:eproject/admin/book_model/fetch_book_screen.dart';
 import 'package:eproject/firebase_options.dart';
 import 'package:eproject/splash_screen.dart';
 import 'package:eproject/login.dart';
@@ -19,7 +21,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Splash(),
+      home: FetchBook(),
     );
   }
 }
