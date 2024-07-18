@@ -1,63 +1,34 @@
-import 'package:eproject/admin/book_controller/book_controller.dart';
-import 'package:eproject/admin/book_model/book_model.dart';
+
+import 'package:eproject/admin/Books/book_controller/book_controller.dart';
+import 'package:eproject/admin/Books/book_views/book_model.dart';
 import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
 
-class UpdateBook extends StatefulWidget {
-  const UpdateBook({super.key,
-  this.bookID,
-  this.bookName,
-  this.bookImage,
-  this.bookPrice,
-  this.bookDescription,
-  this.bookISBN,
-  this.bookAuthor,
-  this.bookCategory,
-  });
-
-  final String? bookID;
-  final String? bookName;
-  final String? bookImage;
-  final String? bookPrice;
-  final String? bookDescription;
-  final String? bookISBN;
-  final String? bookAuthor;
-  final String? bookCategory;
+class AddBook extends StatefulWidget {
+  const AddBook({super.key});
 
   @override
-  State<UpdateBook> createState() => _UpdateBookState();
+  State<AddBook> createState() => _AddBookState();
 }
 
-class _UpdateBookState extends State<UpdateBook> {
+class _AddBookState extends State<AddBook> {
 
   final TextEditingController bookName = TextEditingController();
   final TextEditingController bookPrice = TextEditingController();
   final TextEditingController bookDesc = TextEditingController();
   final TextEditingController bookISBN = TextEditingController();
 
-  String? authorName;
+  String authorName = "Select Author";
 
   List authorsName = ["Select Author","Ernest Hemingway", "George Orwell", "J. K. Rowling",
     "Charles Dickens", "Jane Austen", "Leo Tolstoy"];
 
-  String? categoryName;
+  String categoryName = "Select Category";
 
   List categoriesName = ["Select Category","Sci-Fi", "Horror", "Thrill",
     "Comedy", "Mystery", "Fantasy"];
 
   BookController bookController = BookController();
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    bookName.text = widget.bookName!;
-    bookPrice.text = widget.bookPrice!;
-    bookDesc.text = widget.bookDescription!;
-    bookISBN.text = widget.bookISBN!;
-    authorName = widget.bookAuthor!;
-    categoryName = widget.bookCategory;
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -77,8 +48,8 @@ class _UpdateBookState extends State<UpdateBook> {
                 child: TextFormField(
                   controller: bookName,
                   decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
-                      hintText: "Name"
+                    border: OutlineInputBorder(),
+                    hintText: "Name"
                   ),
                 ),
               ),
@@ -91,7 +62,7 @@ class _UpdateBookState extends State<UpdateBook> {
                   controller: bookPrice,
                   decoration: const InputDecoration(
                       border: OutlineInputBorder(),
-                      hintText: "Price"
+                    hintText: "Price"
                   ),
                 ),
               ),
@@ -104,7 +75,7 @@ class _UpdateBookState extends State<UpdateBook> {
                   controller: bookDesc,
                   decoration: const InputDecoration(
                       border: OutlineInputBorder(),
-                      hintText: "Description"
+                    hintText: "Description"
                   ),
                 ),
               ),
@@ -117,7 +88,7 @@ class _UpdateBookState extends State<UpdateBook> {
                   controller: bookISBN,
                   decoration: const InputDecoration(
                       border: OutlineInputBorder(),
-                      hintText: "ISBN Number"
+                    hintText: "ISBN Number"
                   ),
                 ),
               ),
@@ -129,17 +100,17 @@ class _UpdateBookState extends State<UpdateBook> {
                 child: DropdownButton(
                   isExpanded: true,
                   hint: const Text('Please choose a Author'), // Not necessary for Option 1
-                  value: authorName,
-                  onChanged: (val)=> setState(() {
-                    authorName = val as String;
-                  }),
-                  items: authorsName.map((author) {
-                    return DropdownMenuItem(
-                      value: author,
-                      child: Text(author),
-                    );
-                  }).toList(),
-                ),
+                value: authorName,
+                             onChanged: (val)=> setState(() {
+                 authorName = val as String;
+                             }),
+                items: authorsName.map((author) {
+                  return DropdownMenuItem(
+                    value: author,
+                    child: Text(author),
+                  );
+                }).toList(),
+                            ),
               ),
 
               const SizedBox(height: 10,),
@@ -166,8 +137,9 @@ class _UpdateBookState extends State<UpdateBook> {
               const SizedBox(height: 10,),
 
               ElevatedButton(onPressed: (){
-                bookController.updateBook(BookModel(
-                  bookID: widget.bookID,
+                String bookID = const Uuid().v1();
+                bookController.bookAdd(BookModel(
+                  bookID: bookID,
                   bookName: bookName.text,
                   bookPrice: bookPrice.text,
                   bookISBN: bookISBN.text,
@@ -175,7 +147,7 @@ class _UpdateBookState extends State<UpdateBook> {
                   bookAuthor: authorName,
                   bookCategory: categoryName,
                 ), context);
-              }, child: const Text("Update Book"))
+              }, child: const Text("Add Book"))
             ],
           ),
         ),

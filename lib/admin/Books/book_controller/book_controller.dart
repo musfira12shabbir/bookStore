@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:eproject/admin/book_model/book_model.dart';
+import 'package:eproject/admin/Books/book_views/book_model.dart';
 import 'package:flutter/material.dart';
 
 class BookController{
