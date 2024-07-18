@@ -75,7 +75,7 @@ class _UserDashBoardState extends State<UserDashBoard> {
               child: SizedBox(
                 width: 40,
                 child: Divider(
-                  color: Colors.black,
+                  color: Colors.white,
                   thickness: 1,
                 ),
               ),
@@ -88,8 +88,8 @@ class _UserDashBoardState extends State<UserDashBoard> {
               child: Container(
                 margin: const EdgeInsets.symmetric(vertical: 10),
                 child: const ListTile(
-                  leading: Icon(Iconsax.heart),
-                  title: Text("Your WishList"),
+                  leading: Icon(Iconsax.heart,color: Colors.white,),
+                  title: Text("Your WishList",style: TextStyle(color: Colors.white),),
                 ),
               ),
             ),
@@ -101,8 +101,8 @@ class _UserDashBoardState extends State<UserDashBoard> {
               child: Container(
                 margin: const EdgeInsets.symmetric(vertical: 10),
                 child: const ListTile(
-                  leading: Icon(Iconsax.shopping_bag),
-                  title: Text("Your Cart"),
+                  leading: Icon(Iconsax.shopping_bag,color: Colors.white,),
+                  title: Text("Your Cart",style: TextStyle(color: Colors.white),),
                 ),
               ),
             ),
@@ -110,8 +110,29 @@ class _UserDashBoardState extends State<UserDashBoard> {
             Container(
               margin: const EdgeInsets.symmetric(vertical: 10),
               child: const ListTile(
-                leading: Icon(Iconsax.user),
-                title: Text("Your Profile"),
+                leading: Icon(Iconsax.user,color: Colors.white,),
+                title: Text("Your Profile",style: TextStyle(color: Colors.white),),
+              ),
+            ),
+            Container(
+              margin: const EdgeInsets.symmetric(vertical: 10),
+              child: const ListTile(
+                leading: Icon(Iconsax.user,color: Colors.white,),
+                title: Text("Our Blog",style: TextStyle(color: Colors.white),),
+              ),
+            ),
+            Container(
+              margin: const EdgeInsets.symmetric(vertical: 10),
+              child: const ListTile(
+                leading: Icon(Iconsax.call,color: Colors.white,),
+                title: Text("Contact Us",style: TextStyle(color: Colors.white),),
+              ),
+            ),
+            Container(
+              margin: const EdgeInsets.symmetric(vertical: 10),
+              child: const ListTile(
+                leading: Icon(Iconsax.user,color: Colors.white,),
+                title: Text("About Us",style: TextStyle(color: Colors.white),),
               ),
             ),
             GestureDetector(
@@ -252,7 +273,7 @@ class _UserDashBoardState extends State<UserDashBoard> {
                     width: 6,
                   ),
 
-                  const Text("Our Best Selling", style: TextStyle(color: Colors.black ,fontSize: 14,fontWeight: FontWeight.w600),),
+                  const Text("Categories We Deal", style: TextStyle(color: Colors.black ,fontSize: 14,fontWeight: FontWeight.w600),),
 
                   const SizedBox(
                     width: 6,
