@@ -1,6 +1,12 @@
 
+import 'package:eproject/about_screen.dart';
+import 'package:eproject/admin/Books/book_model/update_book_screen.dart';
+import 'package:eproject/admin/Books/book_views/add_book_screen.dart';
 import 'package:eproject/admin/Books/book_views/fetch_book_screen.dart';
+import 'package:eproject/contact_screen.dart';
 import 'package:eproject/firebase_options.dart';
+import 'package:eproject/splash_screen.dart';
+import 'package:eproject/user_dashboard.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 import 'package:flutter/material.dart';
@@ -18,7 +24,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: FetchBook(),
+      home: Splash(),
     );
   }
 }

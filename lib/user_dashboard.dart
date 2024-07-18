@@ -1,6 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:eproject/MVC/register_screen/register_controller.dart';
 import 'package:eproject/addtocart.dart';
+import 'package:eproject/contact_screen.dart';
 import 'package:eproject/wishlist.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -121,6 +122,7 @@ class _UserDashBoardState extends State<UserDashBoard> {
                 title: Text("Our Blog",style: TextStyle(color: Colors.white),),
               ),
             ),
+
             Container(
               margin: const EdgeInsets.symmetric(vertical: 10),
               child: const ListTile(

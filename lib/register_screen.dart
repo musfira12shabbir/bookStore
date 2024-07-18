@@ -467,7 +467,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       onTap: (){
                         Navigator.push(context, MaterialPageRoute(builder: (context) => const LoginScreen(),));
                       },
-                      child: const Text("Already Have an Account. Login In", style: TextStyle(color: Colors.white, fontWeight: FontWeight.w400),)),
+                      child: const Text("Already Have an Account. Login In", style: TextStyle(color: Colors.black, fontWeight: FontWeight.w400),)),
 
 
 
