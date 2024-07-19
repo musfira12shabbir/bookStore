@@ -1,9 +1,13 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:eproject/addtocart.dart';
+import 'package:eproject/admin/Books/book_views/fetch_book_screen.dart';
 import 'package:eproject/admin/Users/user_controller.dart';
+import 'package:eproject/admin/Users/user_model.dart';
 import 'package:eproject/wishlist.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:flutter/widgets.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
@@ -55,100 +59,136 @@ class _UserDashBoardState extends State<UserDashBoard> {
     return Scaffold(
       drawer: Drawer(
         backgroundColor: Colors.black87,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const SizedBox(
-              height: 20,
-            ),
-            const Center(
-              child: CircleAvatar(
-                radius: 40,
-                backgroundImage: AssetImage("logo.png"),
-              ),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            Center(child: Text(uEmail,style: const TextStyle(color: Colors.white,fontWeight: FontWeight.w600,fontSize: 16),)),
-            const Center(
-              child: SizedBox(
-                width: 40,
-                child: Divider(
-                  color: Colors.white,
-                  thickness: 1,
-                ),
-              ),
-            ),
+        child: StreamBuilder(
+          stream: userRegisterLogin.getUser(uEmail),
+          builder: (context, snapshot) {
 
-            GestureDetector(
-              onTap: (){
-                Navigator.push(context, MaterialPageRoute(builder: (context) => const WishListScreen(),));
-              },
-              child: Container(
-                margin: const EdgeInsets.symmetric(vertical: 10),
-                child: const ListTile(
-                  leading: Icon(Iconsax.heart,color: Colors.white,),
-                  title: Text("Your WishList",style: TextStyle(color: Colors.white),),
-                ),
-              ),
-            ),
+            if(snapshot.connectionState == ConnectionState.waiting){
+              return const Center(child: CircularProgressIndicator(),);
+            }
 
-            GestureDetector(
-              onTap: (){
-                Navigator.push(context, MaterialPageRoute(builder: (context) => const CartScreen(),));
-              },
-              child: Container(
-                margin: const EdgeInsets.symmetric(vertical: 10),
-                child: const ListTile(
-                  leading: Icon(Iconsax.shopping_bag,color: Colors.white,),
-                  title: Text("Your Cart",style: TextStyle(color: Colors.white),),
-                ),
-              ),
-            ),
+            if(snapshot.hasData){
+              return ListView.builder(
+                itemCount: snapshot.data!.length,
+                itemBuilder: (context, index) {
+                  UserModel userData = snapshot.data![index];
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Center(
+                      child: CircleAvatar(
+                        radius: 40,
+                        backgroundImage: NetworkImage(userData.getImage!),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Center(child: Text(userData.userEmail!,style: const TextStyle(color: Colors.white,fontWeight: FontWeight.w600,fontSize: 16),)),
+                    const Center(
+                      child: SizedBox(
+                        width: 40,
+                        child: Divider(
+                          color: Colors.white,
+                          thickness: 1,
+                        ),
+                      ),
+                    ),
 
-            Container(
-              margin: const EdgeInsets.symmetric(vertical: 10),
-              child: const ListTile(
-                leading: Icon(Iconsax.user,color: Colors.white,),
-                title: Text("Your Profile",style: TextStyle(color: Colors.white),),
-              ),
-            ),
-            Container(
-              margin: const EdgeInsets.symmetric(vertical: 10),
-              child: const ListTile(
-                leading: Icon(Iconsax.user,color: Colors.white,),
-                title: Text("Our Blog",style: TextStyle(color: Colors.white),),
-              ),
-            ),
+                    GestureDetector(
+                      onTap: (){
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => const WishListScreen(),));
+                      },
+                      child: Container(
+                        margin: const EdgeInsets.symmetric(vertical: 10),
+                        child: const ListTile(
+                          leading: Icon(Iconsax.heart,color: Colors.white,),
+                          title: Text("Your WishList",style: TextStyle(color: Colors.white),),
+                        ),
+                      ),
+                    ),
 
-            Container(
-              margin: const EdgeInsets.symmetric(vertical: 10),
-              child: const ListTile(
-                leading: Icon(Iconsax.call,color: Colors.white,),
-                title: Text("Contact Us",style: TextStyle(color: Colors.white),),
-              ),
-            ),
-            Container(
-              margin: const EdgeInsets.symmetric(vertical: 10),
-              child: const ListTile(
-                leading: Icon(Iconsax.user,color: Colors.white,),
-                title: Text("About Us",style: TextStyle(color: Colors.white),),
-              ),
-            ),
-            GestureDetector(
-              onTap: (){
-                userRegisterLogin.userLogout(context);
-              },
-              child: Container(
-                margin: const EdgeInsets.symmetric(vertical: 10),
-                child: const ListTile(
-                  leading: Icon(Iconsax.logout_1, color: Colors.red,),
-                  title: Text("Logout", style: TextStyle(color: Colors.red),),
-                ),
-              ),
-            )
-          ],
+                    GestureDetector(
+                      onTap: (){
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => const CartScreen(),));
+                      },
+                      child: Container(
+                        margin: const EdgeInsets.symmetric(vertical: 10),
+                        child: const ListTile(
+                          leading: Icon(Iconsax.shopping_bag,color: Colors.white,),
+                          title: Text("Your Cart",style: TextStyle(color: Colors.white),),
+                        ),
+                      ),
+                    ),
+
+                    Container(
+                      margin: const EdgeInsets.symmetric(vertical: 10),
+                      child: const ListTile(
+                        leading: Icon(Iconsax.user,color: Colors.white,),
+                        title: Text("Your Profile",style: TextStyle(color: Colors.white),),
+                      ),
+                    ),
+
+                    Container(
+                      margin: const EdgeInsets.symmetric(vertical: 10),
+                      child: const ListTile(
+                        leading: Icon(Iconsax.call,color: Colors.white,),
+                        title: Text("Contact Us",style: TextStyle(color: Colors.white),),
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap: (){
+                        if(context.mounted){
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => const FetchBook(),));
+                        }
+                      },
+                      child: Container(
+                        margin: const EdgeInsets.symmetric(vertical: 10),
+                        child: const ListTile(
+                          leading: Icon(Iconsax.user,color: Colors.white,),
+                          title: Text("Books",style: TextStyle(color: Colors.white),),
+                        ),
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap: (){
+                        userRegisterLogin.userLogout(context);
+                      },
+                      child: Container(
+                        margin: const EdgeInsets.symmetric(vertical: 10),
+                        child: const ListTile(
+                          leading: Icon(Iconsax.logout_1, color: Colors.red,),
+                          title: Text("Logout", style: TextStyle(color: Colors.red),),
+                        ),
+                      ),
+                    ),
+
+                    GestureDetector(
+                      onTap:(){
+                        userRegisterLogin.userDelete(userData.userID, userData.getImage, context);
+                      },
+                      child: Container(
+                        margin: const EdgeInsets.symmetric(vertical: 10),
+                        child: const ListTile(
+                          leading: Icon(Iconsax.user,color: Colors.red,),
+                          title: Text("Delete Account",style: TextStyle(color: Colors.red),),
+                        ),
+                      ),
+                    ),
+                  ],
+                );
+              },);
+            }
+
+            if(snapshot.hasError){
+              return const Center(child: Icon(Icons.error,color: Colors.red,),);
+            }
+
+            return Container();
+          },
         ),
       ),
       body: SafeArea(
@@ -160,7 +200,7 @@ class _UserDashBoardState extends State<UserDashBoard> {
             children: [
 
               Container(
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   color: Colors.black87,
                 ),
                 margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
@@ -180,10 +220,10 @@ class _UserDashBoardState extends State<UserDashBoard> {
 
                     const Text("Book App", style: TextStyle(color: Colors.white,fontSize: 16,fontWeight: FontWeight.w600),),
 
-                    CircleAvatar(
+                    const CircleAvatar(
                       radius: 20,
                       backgroundColor: Colors.white,
-                      backgroundImage: const AssetImage('images/logo.png'),
+                      backgroundImage: AssetImage('images/logo.png'),
                     )
                   ],
                 ),

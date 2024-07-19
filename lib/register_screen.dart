@@ -76,7 +76,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
 
 
-                      webImage == null ? Container(
+                      userProfile == null ? Container(
                         width: double.infinity,
                         height: 150,
                         margin: const EdgeInsets.symmetric(horizontal: 20),
@@ -454,7 +454,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                          ), context);
                         }
                       }, style: const ButtonStyle(
-                        backgroundColor: WidgetStatePropertyAll(Colors.white),
+                        backgroundColor: MaterialStatePropertyAll(Colors.white),
                       ), child: const Text("Register",style: TextStyle(color: Colors.black),),),
 
                       const SizedBox(

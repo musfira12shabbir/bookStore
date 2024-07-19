@@ -63,7 +63,7 @@ class _AddBookState extends State<AddBook> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 
-              bookImageWeb == null ? Container(
+              bookImage == null ? Container(
               width: double.infinity,
               height: 150,
               margin: const EdgeInsets.symmetric(horizontal: 20),
@@ -375,6 +375,7 @@ class _AddBookState extends State<AddBook> {
                 ElevatedButton(
                   onPressed: () {
                     String bookID = const Uuid().v1();
+
                    kIsWeb ?  bookController.bookAdd(
                      BookModel(
                        bookID: bookID,

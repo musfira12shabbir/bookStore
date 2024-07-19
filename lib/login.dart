@@ -106,9 +106,9 @@ class _LoginScreenState extends State<LoginScreen> {
                             );
                           },
                           style: ButtonStyle(
-                            backgroundColor: WidgetStateProperty.resolveWith<Color>(
-                                  (Set<WidgetState> states) {
-                                return states.contains(WidgetState.disabled) ? Colors.grey : Colors.white;
+                            backgroundColor: MaterialStateProperty.resolveWith<Color>(
+                                  (Set<MaterialState> states) {
+                                return states.contains(MaterialState.disabled) ? Colors.grey : Colors.white;
                               },
                             ),
                           ),

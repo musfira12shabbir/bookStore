@@ -98,7 +98,7 @@ class _UpdateBookState extends State<UpdateBook> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
 
-              updateBookImageWeb == null ? Container(
+              updateBookImage == null ? Container(
                 width: double.infinity,
                 height: 150,
                 margin: const EdgeInsets.symmetric(horizontal: 20),
