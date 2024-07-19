@@ -1,8 +1,10 @@
+
+
 import 'package:flutter/material.dart';
 import 'package:eproject/admin/Books/book_controller/book_controller.dart';
-import 'package:eproject/admin/Books/book_model/update_book_screen.dart';
+import 'package:eproject/admin/Books/book_views/update_book_screen.dart';
 import 'package:eproject/admin/Books/book_views/add_book_screen.dart';
-import 'package:eproject/admin/Books/book_views/book_model.dart';
+import 'package:eproject/admin/Books/book_model/book_model.dart';
 
 class FetchBook extends StatefulWidget {
   const FetchBook({super.key});
@@ -19,7 +21,7 @@ class _FetchBookState extends State<FetchBook> {
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           'Book List',
           style: TextStyle(color: Colors.white),
         ),
@@ -30,7 +32,7 @@ class _FetchBookState extends State<FetchBook> {
         stream: bookController.getBooks(),
         builder: (context, AsyncSnapshot<List<BookModel>> snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(
+            return const Center(
               child: CircularProgressIndicator(
                 valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
               ),
@@ -45,22 +47,23 @@ class _FetchBookState extends State<FetchBook> {
                 String bookID = book.bookID!;
                 String bookISBN = book.bookISBN!;
                 String bookName = book.bookName!;
-                String bookImage = book.bookImage!;
+                String bookImage = book.getImage!; // File to String conversion
                 String bookPrice = book.bookPrice!;
                 String bookDesc = book.bookDescription!;
                 String bookCate = book.bookCategory!;
                 String bookAuthor = book.bookAuthor!;
                 return Card(
                   color: Colors.white,
-                  margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                  margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                   child: ListTile(
+                    leading: CircleAvatar(backgroundImage: NetworkImage(bookImage),),
                     title: Text(
                       bookName,
-                      style: TextStyle(color: Colors.black),
+                      style: const TextStyle(color: Colors.black),
                     ),
                     subtitle: Text(
                       'Price: $bookPrice',
-                      style: TextStyle(color: Colors.black),
+                      style: const TextStyle(color: Colors.black),
                     ),
                     trailing: SizedBox(
                       width: 100,
@@ -74,7 +77,7 @@ class _FetchBookState extends State<FetchBook> {
                                   builder: (context) => UpdateBook(
                                     bookID: bookID,
                                     bookName: bookName,
-                                    bookImage: bookImage,
+                                    getImage: bookImage,
                                     bookPrice: bookPrice,
                                     bookISBN: bookISBN,
                                     bookCategory: bookCate,
@@ -84,13 +87,13 @@ class _FetchBookState extends State<FetchBook> {
                                 ),
                               );
                             },
-                            icon: Icon(Icons.update, color: Colors.black),
+                            icon: const Icon(Icons.update, color: Colors.black),
                           ),
                           IconButton(
                             onPressed: () {
-                              bookController.deleteBook(bookID, context);
+                              bookController.deleteBook(bookID, bookImage,context);
                             },
-                            icon: Icon(Icons.delete, color: Colors.red),
+                            icon: const Icon(Icons.delete, color: Colors.red),
                           ),
                         ],
                       ),
@@ -102,7 +105,7 @@ class _FetchBookState extends State<FetchBook> {
           }
 
           if (snapshot.hasError) {
-            return Center(
+            return const Center(
               child: Icon(
                 Icons.error,
                 color: Colors.red,
@@ -110,7 +113,7 @@ class _FetchBookState extends State<FetchBook> {
             );
           }
 
-          return Center(
+          return const Center(
             child: Text(
               "No Book Available",
               style: TextStyle(color: Colors.white),

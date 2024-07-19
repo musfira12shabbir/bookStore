@@ -1,7 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:eproject/MVC/register_screen/register_controller.dart';
 import 'package:eproject/addtocart.dart';
-import 'package:eproject/contact_screen.dart';
+import 'package:eproject/admin/Users/user_controller.dart';
 import 'package:eproject/wishlist.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';

@@ -1,7 +1,8 @@
+
+import 'package:eproject/admin/Users/user_controller.dart';
+import 'package:eproject/admin/Users/user_model.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
-import 'MVC/register_screen/register_model.dart';
-import 'MVC/register_screen/register_controller.dart';
 import 'register_screen.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -52,16 +53,16 @@ class _LoginScreenState extends State<LoginScreen> {
                           margin: const EdgeInsets.symmetric(horizontal: 10),
                           child: TextFormField(
                             controller: userEmail,
-                            style: TextStyle(color: Colors.white), // Set text color to white
+                            style: const TextStyle(color: Colors.white), // Set text color to white
                             decoration: InputDecoration(
-                              prefixIcon: Icon(Iconsax.message, color: Colors.white),
+                              prefixIcon: const Icon(Iconsax.message, color: Colors.white),
                               hintText: "Enter Your Email..",
                               hintStyle: TextStyle(color: Colors.white.withOpacity(0.6), fontSize: 12), // Set hint text color to white with opacity
-                              border: UnderlineInputBorder(
+                              border: const UnderlineInputBorder(
                                 borderSide: BorderSide(color: Colors.white, width: 2),
                                 borderRadius: BorderRadius.only(bottomLeft: Radius.circular(20), bottomRight: Radius.circular(20)),
                               ),
-                              focusedBorder: UnderlineInputBorder(
+                              focusedBorder: const UnderlineInputBorder(
                                 borderSide: BorderSide(color: Colors.white, width: 2),
                                 borderRadius: BorderRadius.only(bottomLeft: Radius.circular(20), bottomRight: Radius.circular(20)),
                               ),
@@ -75,16 +76,16 @@ class _LoginScreenState extends State<LoginScreen> {
                           margin: const EdgeInsets.symmetric(horizontal: 10),
                           child: TextFormField(
                             controller: userPassword,
-                            style: TextStyle(color: Colors.white), // Set text color to white
+                            style: const TextStyle(color: Colors.white), // Set text color to white
                             decoration: InputDecoration(
-                              prefixIcon: Icon(Iconsax.key1, color: Colors.white),
+                              prefixIcon: const Icon(Iconsax.key1, color: Colors.white),
                               hintText: "Enter Your Password..",
                               hintStyle: TextStyle(color: Colors.white.withOpacity(0.6), fontSize: 12), // Set hint text color to white with opacity
-                              border: UnderlineInputBorder(
+                              border: const UnderlineInputBorder(
                                 borderSide: BorderSide(color: Colors.white, width: 2),
                                 borderRadius: BorderRadius.only(bottomLeft: Radius.circular(20), bottomRight: Radius.circular(20)),
                               ),
-                              focusedBorder: UnderlineInputBorder(
+                              focusedBorder: const UnderlineInputBorder(
                                 borderSide: BorderSide(color: Colors.white, width: 2),
                                 borderRadius: BorderRadius.only(bottomLeft: Radius.circular(20), bottomRight: Radius.circular(20)),
                               ),
@@ -105,9 +106,9 @@ class _LoginScreenState extends State<LoginScreen> {
                             );
                           },
                           style: ButtonStyle(
-                            backgroundColor: MaterialStateProperty.resolveWith<Color>(
-                                  (Set<MaterialState> states) {
-                                return states.contains(MaterialState.disabled) ? Colors.grey : Colors.white;
+                            backgroundColor: WidgetStateProperty.resolveWith<Color>(
+                                  (Set<WidgetState> states) {
+                                return states.contains(WidgetState.disabled) ? Colors.grey : Colors.white;
                               },
                             ),
                           ),

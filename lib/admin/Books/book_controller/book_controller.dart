@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:eproject/admin/Books/book_views/book_model.dart';
+import 'package:eproject/admin/Books/book_model/book_model.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 
 class BookController{
@@ -9,22 +10,54 @@ class BookController{
   void bookAdd(BookModel bookModel, BuildContext context)async{
 
    try{
-     Map<String, dynamic> bookAdd = {
-       "bookID" : bookModel.bookID,
-       "bookName" : bookModel.bookName!,
-       "bookImage" : "bookModel.bookImage!",
-       "bookPrice" : bookModel.bookPrice!,
-       "bookDesc" : bookModel.bookDescription!,
-       "bookISBN" : bookModel.bookISBN!,
-       "bookAuthor" : bookModel.bookAuthor!,
-       "bookCate" : bookModel.bookCategory!,
-       "reviews" : []
-     };
+     if(bookModel.bookImageWeb != null){
+       UploadTask uploadTask =  FirebaseStorage.instance.ref().child("bookImages").child(bookModel.bookID!).putData(bookModel.bookImageWeb!);
+       TaskSnapshot taskSnapshot = await uploadTask;
+       String bookImage = await taskSnapshot.ref.getDownloadURL();
 
-     await collectionReference.doc(bookModel.bookID).set(bookAdd);
-     if(context.mounted){
-       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Book Added Successfully"),backgroundColor: Colors.green, margin: EdgeInsets.symmetric(horizontal: 10, vertical: 10),behavior: SnackBarBehavior.floating,));
-       Navigator.pop(context);
+       Map<String, dynamic> bookAdd = {
+         "bookID" : bookModel.bookID,
+         "bookName" : bookModel.bookName!,
+         "bookImage" : bookImage,
+         "bookPrice" : bookModel.bookPrice!,
+         "bookDesc" : bookModel.bookDescription!,
+         "bookISBN" : bookModel.bookISBN!,
+         "bookAuthor" : bookModel.bookAuthor!,
+         "bookCate" : bookModel.bookCategory!,
+         "reviews" : []
+       };
+
+       await collectionReference.doc(bookModel.bookID).set(bookAdd);
+       if(context.mounted){
+         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Book Added Successfully"),backgroundColor: Colors.green, margin: EdgeInsets.symmetric(horizontal: 10, vertical: 10),behavior: SnackBarBehavior.floating,));
+         Navigator.pop(context);
+       }
+     }
+     else if(bookModel.bookImage != null){
+       UploadTask uploadTask =  FirebaseStorage.instance.ref().child("bookImages").child(bookModel.bookID!).putFile(bookModel.bookImage!);
+       TaskSnapshot taskSnapshot = await uploadTask;
+       String bookImage = await taskSnapshot.ref.getDownloadURL();
+
+       Map<String, dynamic> bookAdd = {
+         "bookID" : bookModel.bookID,
+         "bookName" : bookModel.bookName!,
+         "bookImage" : bookImage,
+         "bookPrice" : bookModel.bookPrice!,
+         "bookDesc" : bookModel.bookDescription!,
+         "bookISBN" : bookModel.bookISBN!,
+         "bookAuthor" : bookModel.bookAuthor!,
+         "bookCate" : bookModel.bookCategory!,
+         "reviews" : []
+       };
+
+       await collectionReference.doc(bookModel.bookID).set(bookAdd);
+       if(context.mounted){
+         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Book Added Successfully"),backgroundColor: Colors.green, margin: EdgeInsets.symmetric(horizontal: 10, vertical: 10),behavior: SnackBarBehavior.floating,));
+         Navigator.pop(context);
+       }
+     }
+     else{
+       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Book image not Selected"),backgroundColor: Colors.red, margin: EdgeInsets.symmetric(horizontal: 10, vertical: 10),behavior: SnackBarBehavior.floating,));
      }
    } catch(ex){
        if(context.mounted){
@@ -40,7 +73,7 @@ class BookController{
         return BookModel(
           bookID: data['bookID'],
           bookName: data['bookName'],
-          bookImage: data['bookImage'],
+          getImage: data['bookImage'],
           bookPrice: data['bookPrice'],
           bookISBN: data['bookISBN'],
           bookCategory: data['bookCate'],
@@ -53,21 +86,56 @@ class BookController{
 
    void updateBook(BookModel bookModel, BuildContext context)async{
      try{
-       Map<String, dynamic> bookAdd = {
-         "bookName" : bookModel.bookName!,
-         "bookImage" : "bookModel.bookImage!",
-         "bookPrice" : bookModel.bookPrice!,
-         "bookDesc" : bookModel.bookDescription!,
-         "bookISBN" : bookModel.bookISBN!,
-         "bookAuthor" : bookModel.bookAuthor!,
-         "bookCate" : bookModel.bookCategory!,
-         "reviews" : []
-       };
+       if(bookModel.bookImageWeb != null){
+         await FirebaseStorage.instance.refFromURL(bookModel.getImage!).delete();
 
-       await collectionReference.doc(bookModel.bookID).update(bookAdd);
-       if(context.mounted){
-         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Book Updated Successfully"),backgroundColor: Colors.green, margin: EdgeInsets.symmetric(horizontal: 10, vertical: 10),behavior: SnackBarBehavior.floating,));
-         Navigator.pop(context);
+         UploadTask uploadTask =  FirebaseStorage.instance.ref().child("bookImages").child(bookModel.bookID!).putData(bookModel.bookImageWeb!);
+         TaskSnapshot taskSnapshot = await uploadTask;
+         String updateImage = await taskSnapshot.ref.getDownloadURL();
+
+         Map<String, dynamic> bookAdd = {
+           "bookName" : bookModel.bookName!,
+           "bookImage" : updateImage,
+           "bookPrice" : bookModel.bookPrice!,
+           "bookDesc" : bookModel.bookDescription!,
+           "bookISBN" : bookModel.bookISBN!,
+           "bookAuthor" : bookModel.bookAuthor!,
+           "bookCate" : bookModel.bookCategory!,
+           "reviews" : []
+         };
+
+         await collectionReference.doc(bookModel.bookID).update(bookAdd);
+         if(context.mounted){
+           ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Book Updated Successfully"),backgroundColor: Colors.green, margin: EdgeInsets.symmetric(horizontal: 10, vertical: 10),behavior: SnackBarBehavior.floating,));
+           Navigator.pop(context);
+         }
+       }
+       else if(bookModel.bookImage != null){
+         await FirebaseStorage.instance.refFromURL(bookModel.getImage!).delete();
+
+         UploadTask uploadTask =  FirebaseStorage.instance.ref().child("bookImages").child(bookModel.bookID!).putFile(bookModel.bookImage!);
+         TaskSnapshot taskSnapshot = await uploadTask;
+         String updateImage = await taskSnapshot.ref.getDownloadURL();
+
+         Map<String, dynamic> bookAdd = {
+           "bookName" : bookModel.bookName!,
+           "bookImage" : updateImage,
+           "bookPrice" : bookModel.bookPrice!,
+           "bookDesc" : bookModel.bookDescription!,
+           "bookISBN" : bookModel.bookISBN!,
+           "bookAuthor" : bookModel.bookAuthor!,
+           "bookCate" : bookModel.bookCategory!,
+           "reviews" : []
+         };
+
+         await collectionReference.doc(bookModel.bookID).update(bookAdd);
+         if(context.mounted){
+           ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Book Updated Successfully"),backgroundColor: Colors.green, margin: EdgeInsets.symmetric(horizontal: 10, vertical: 10),behavior: SnackBarBehavior.floating,));
+           Navigator.pop(context);
+         }
+       }
+       else{
+         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Book image not selected"),backgroundColor: Colors.red, margin: EdgeInsets.symmetric(horizontal: 10, vertical: 10),behavior: SnackBarBehavior.floating,));
        }
      } catch(ex){
        if(context.mounted){
@@ -76,8 +144,9 @@ class BookController{
      }
    }
 
-   void deleteBook(String? bookID, BuildContext context)async{
+   void deleteBook(String? bookID, String bookImageUrl,BuildContext context)async{
      try{
+       await FirebaseStorage.instance.refFromURL(bookImageUrl).delete();
        await collectionReference.doc(bookID).delete();
        if(context.mounted){
          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Book Deleted Successfully"),backgroundColor: Colors.red, margin: EdgeInsets.symmetric(horizontal: 10, vertical: 10),behavior: SnackBarBehavior.floating,));

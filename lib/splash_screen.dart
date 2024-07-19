@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'package:eproject/MVC/register_screen/register_controller.dart';
+import 'package:eproject/admin/Users/user_controller.dart';
 import 'package:eproject/login.dart';
 import 'package:eproject/user_dashboard.dart';
 import 'package:flutter/material.dart';
