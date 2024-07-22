@@ -47,6 +47,7 @@ dependencies:
   carousel_slider:
   flutter_rating_bar:
   firebase_storage: ^11.6.0
+  google_generative_ai: ^0.4.3
 
 dev_dependencies:
   flutter_test:

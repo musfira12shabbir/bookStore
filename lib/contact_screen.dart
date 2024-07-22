@@ -33,7 +33,13 @@ class _ContactScreenState extends State<ContactScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        color: Colors.black,
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: NetworkImage('https://i3.wp.com/w0.peakpx.com/wallpaper/349/185/HD-wallpaper-black-background-art-fon-pattern.jpg?resize=758%2C758&ssl=1'), // Replace with your network image URL
+            fit: BoxFit.cover,
+          ),
+        ),
+
         child: Center(
           child: Container(
             width: MediaQuery.of(context).size.width * 0.8,
