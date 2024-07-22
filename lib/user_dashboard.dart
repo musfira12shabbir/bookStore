@@ -4,6 +4,7 @@ import 'package:eproject/addtocart.dart';
 import 'package:eproject/admin/Books/book_views/fetch_book_screen.dart';
 import 'package:eproject/admin/Users/user_controller.dart';
 import 'package:eproject/admin/Users/user_model.dart';
+import 'package:eproject/constants/cate_product.dart';
 import 'package:eproject/profile_screen.dart';
 import 'package:eproject/wishlist.dart';
 import 'package:flutter/cupertino.dart';
@@ -168,10 +169,10 @@ class _UserDashBoardState extends State<UserDashBoard> {
                         onTap: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => ProfileScreen()), // Replace ProfileScreen with your actual profile screen widget
+                            MaterialPageRoute(builder: (context) => const ProfileScreen()), // Replace ProfileScreen with your actual profile screen widget
                           );
                         },
-                        child: ListTile(
+                        child: const ListTile(
                           leading: Icon(Iconsax.user, color: Colors.white),
                           title: Text("Your Profile", style: TextStyle(color: Colors.white)),
                         ),
@@ -185,10 +186,10 @@ class _UserDashBoardState extends State<UserDashBoard> {
                         onTap: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => ContactScreen()), // Replace ContactUsScreen with your actual contact screen widget
+                            MaterialPageRoute(builder: (context) => const ContactScreen()), // Replace ContactUsScreen with your actual contact screen widget
                           );
                         },
-                        child: ListTile(
+                        child: const ListTile(
                           leading: Icon(Iconsax.call, color: Colors.white),
                           title: Text("Contact Us", style: TextStyle(color: Colors.white)),
                         ),
@@ -202,10 +203,10 @@ class _UserDashBoardState extends State<UserDashBoard> {
                         onTap: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => AboutScreen()), // Replace ContactUsScreen with your actual contact screen widget
+                            MaterialPageRoute(builder: (context) => const AboutScreen()), // Replace ContactUsScreen with your actual contact screen widget
                           );
                         },
-                        child: ListTile(
+                        child: const ListTile(
                           leading: Icon(Iconsax.call, color: Colors.white),
                           title: Text("About Us", style: TextStyle(color: Colors.white)),
                         ),
@@ -372,91 +373,90 @@ class _UserDashBoardState extends State<UserDashBoard> {
               SizedBox(
                 width: double.infinity,
                 height: 240,
-                child: Hero(
-                  tag: "bookImage",
-                  child: ListView.builder(
-                    itemCount: 6,
-                    scrollDirection: Axis.horizontal,
-                    physics: const ScrollPhysics(),
-                    shrinkWrap: true,
-                    itemBuilder: (context, index) {
-                    return index != 6 ? GestureDetector(
-                      onTap: (){
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => BookDescription( bookImage: NewToShell[index]),));
-                      },
-                      child: Container(
-                        margin: const EdgeInsets.symmetric(horizontal: 10 , vertical: 10),
-                        width: 160,
-                        height: 220,
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(14),
-                            image: DecorationImage(
-                                fit: BoxFit.cover,
-                                colorFilter: ColorFilter.mode(Colors.black.withOpacity(0.5), BlendMode.darken),
-                                image: NetworkImage(NewToShell[index])),
-                            boxShadow: [
-                              BoxShadow(
-                                  color: Colors.grey.shade400,
-                                  spreadRadius: 1,
-                                  blurRadius: 10
-                              )
-                            ]
-                        ),
-                        child: Container(
-                            margin: const EdgeInsets.only(left: 10, top: 140),
-                            child:  Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(NewToShellName[index], style: TextStyle(color: Colors.white,fontSize: 16,fontWeight: FontWeight.w600),),
-                                Row(
-                                  children: [
-                                    RatingBar.builder(
-                                      initialRating: 5,
-                                      minRating: 1,
-                                      direction: Axis.horizontal,
-                                      allowHalfRating: true,
-                                      itemCount: 5,
-                                      itemSize: 12,
-                                      itemPadding: const EdgeInsets.symmetric(horizontal: 1.0),
-                                      itemBuilder: (context, _) => const Icon(
-                                        Icons.star,
-                                        color: Colors.amber,
-                                      ),
-                                      onRatingUpdate: (rating) {
-                                      },
-                                    ),
-                                    const SizedBox(
-                                      width: 4,
-                                    ),
-                                    const Text("4.5", style: TextStyle(color: Colors.white,fontSize: 12,fontWeight: FontWeight.w400),),
-                                  ],
-                                ),
-                                const Text("View Details", style: TextStyle(color: Colors.white,fontSize: 12,fontWeight: FontWeight.w400),),
-                              ],
-                            )),
-                      ),
-                    ) : Container(
-                      margin: const EdgeInsets.symmetric(horizontal: 10),
+                child: ListView.builder(
+                  itemCount: 6,
+                  scrollDirection: Axis.horizontal,
+                  physics: const ScrollPhysics(),
+                  shrinkWrap: true,
+                  itemBuilder: (context, index) {
+                  return index != 6 ? GestureDetector(
+                    onTap: (){
+                      // Navigator.push(context, MaterialPageRoute(builder: (context) => BookDescription( bookImage: NewToShell[index]),));
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => CateProduct(bookCate: CatName[index])));
+
+                    },
+                    child: Container(
+                      margin: const EdgeInsets.symmetric(horizontal: 10 , vertical: 10),
                       width: 160,
                       height: 220,
-                        decoration: BoxDecoration(
+                      decoration: BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(14),
+                          image: DecorationImage(
+                              fit: BoxFit.cover,
+                              colorFilter: ColorFilter.mode(Colors.black.withOpacity(0.5), BlendMode.darken),
+                              image: NetworkImage(NewToShell[index])),
+                          boxShadow: [
+                            BoxShadow(
+                                color: Colors.grey.shade400,
+                                spreadRadius: 1,
+                                blurRadius: 10
+                            )
+                          ]
+                      ),
+                      child: Container(
+                          margin: const EdgeInsets.only(left: 10, top: 140),
+                          child:  Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(NewToShellName[index], style: const TextStyle(color: Colors.white,fontSize: 16,fontWeight: FontWeight.w600),),
+                              Row(
+                                children: [
+                                  RatingBar.builder(
+                                    initialRating: 5,
+                                    minRating: 1,
+                                    direction: Axis.horizontal,
+                                    allowHalfRating: true,
+                                    itemCount: 5,
+                                    itemSize: 12,
+                                    itemPadding: const EdgeInsets.symmetric(horizontal: 1.0),
+                                    itemBuilder: (context, _) => const Icon(
+                                      Icons.star,
+                                      color: Colors.amber,
+                                    ),
+                                    onRatingUpdate: (rating) {
+                                    },
+                                  ),
+                                  const SizedBox(
+                                    width: 4,
+                                  ),
+                                  const Text("4.5", style: TextStyle(color: Colors.white,fontSize: 12,fontWeight: FontWeight.w400),),
+                                ],
+                              ),
+                              const Text("View Details", style: TextStyle(color: Colors.white,fontSize: 12,fontWeight: FontWeight.w400),),
+                            ],
+                          )),
+                    ),
+                  ) : Container(
+                    margin: const EdgeInsets.symmetric(horizontal: 10),
+                    width: 160,
+                    height: 220,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(14),
 
-                        ),
-                        alignment: Alignment.center,
-                      child: const Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text("View All", style: TextStyle(color: Colors.red ,fontSize: 14,fontWeight: FontWeight.w600),),
-                          SizedBox(width: 4,),
-                          Icon(Icons.chevron_right_sharp, color: Colors.red,)
-                        ],
-                      )
-                    );
-                  },),
-                ),
+                      ),
+                      alignment: Alignment.center,
+                    child: const Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text("View All", style: TextStyle(color: Colors.red ,fontSize: 14,fontWeight: FontWeight.w600),),
+                        SizedBox(width: 4,),
+                        Icon(Icons.chevron_right_sharp, color: Colors.red,)
+                      ],
+                    )
+                  );
+                },),
               ),
 
               const SizedBox(
@@ -501,91 +501,88 @@ class _UserDashBoardState extends State<UserDashBoard> {
               SizedBox(
                 width: double.infinity,
                 height: 240,
-                child: Hero(
-                  tag: "bookImage",
-                  child: ListView.builder(
-                    itemCount: CatImages.length,
-                    scrollDirection: Axis.horizontal,
-                    physics: const ScrollPhysics(),
-                    shrinkWrap: true,
-                    itemBuilder: (context, index) {
-                      return index != 8 ? GestureDetector(
-                        onTap: (){
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => BookDescription( bookImage: CatImages[index]),));
-                        },
-                        child: Container(
-                          margin: const EdgeInsets.symmetric(horizontal: 10 , vertical: 10),
-                          width: 160,
-                          height: 220,
-                          decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(14),
-                              image: DecorationImage(
-                                  fit: BoxFit.cover,
-                                  colorFilter: ColorFilter.mode(Colors.black.withOpacity(0.5), BlendMode.darken),
-                                  image: NetworkImage(CatImages[index])),
-                              boxShadow: [
-                                BoxShadow(
-                                    color: Colors.grey.shade400,
-                                    spreadRadius: 1,
-                                    blurRadius: 10
-                                )
-                              ]
-                          ),
-                          child: Container(
-                              margin: const EdgeInsets.only(left: 10, top: 140),
-                              child:  Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                   Text(CatName[index], style: TextStyle(color: Colors.white,fontSize: 16,fontWeight: FontWeight.w600),),
-                                  Row(
-                                    children: [
-                                      RatingBar.builder(
-                                        initialRating: 5,
-                                        minRating: 1,
-                                        direction: Axis.horizontal,
-                                        allowHalfRating: true,
-                                        itemCount: 5,
-                                        itemSize: 12,
-                                        itemPadding: const EdgeInsets.symmetric(horizontal: 1.0),
-                                        itemBuilder: (context, _) => const Icon(
-                                          Icons.star,
-                                          color: Colors.amber,
-                                        ),
-                                        onRatingUpdate: (rating) {
-                                        },
-                                      ),
-                                      const SizedBox(
-                                        width: 4,
-                                      ),
-                                      const Text("4.5", style: TextStyle(color: Colors.white,fontSize: 12,fontWeight: FontWeight.w400),),
-                                    ],
-                                  ),
-                                  const Text("View Details", style: TextStyle(color: Colors.white,fontSize: 12,fontWeight: FontWeight.w400),),
-                                ],
-                              )),
-                        ),
-                      ) : Container(
-                          margin: const EdgeInsets.symmetric(horizontal: 10),
-                          width: 160,
-                          height: 220,
-                          decoration: BoxDecoration(
+                child: ListView.builder(
+                  itemCount: CatImages.length,
+                  scrollDirection: Axis.horizontal,
+                  physics: const ScrollPhysics(),
+                  shrinkWrap: true,
+                  itemBuilder: (context, index) {
+                    return index != 8 ? GestureDetector(
+                      onTap: (){
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => CateProduct(bookCate: CatName[index])));
+                      },
+                      child: Container(
+                        margin: const EdgeInsets.symmetric(horizontal: 10 , vertical: 10),
+                        width: 160,
+                        height: 220,
+                        decoration: BoxDecoration(
                             color: Colors.white,
                             borderRadius: BorderRadius.circular(14),
+                            image: DecorationImage(
+                                fit: BoxFit.cover,
+                                colorFilter: ColorFilter.mode(Colors.black.withOpacity(0.5), BlendMode.darken),
+                                image: NetworkImage(CatImages[index])),
+                            boxShadow: [
+                              BoxShadow(
+                                  color: Colors.grey.shade400,
+                                  spreadRadius: 1,
+                                  blurRadius: 10
+                              )
+                            ]
+                        ),
+                        child: Container(
+                            margin: const EdgeInsets.only(left: 10, top: 140),
+                            child:  Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                 Text(CatName[index], style: const TextStyle(color: Colors.white,fontSize: 16,fontWeight: FontWeight.w600),),
+                                Row(
+                                  children: [
+                                    RatingBar.builder(
+                                      initialRating: 5,
+                                      minRating: 1,
+                                      direction: Axis.horizontal,
+                                      allowHalfRating: true,
+                                      itemCount: 5,
+                                      itemSize: 12,
+                                      itemPadding: const EdgeInsets.symmetric(horizontal: 1.0),
+                                      itemBuilder: (context, _) => const Icon(
+                                        Icons.star,
+                                        color: Colors.amber,
+                                      ),
+                                      onRatingUpdate: (rating) {
+                                      },
+                                    ),
+                                    const SizedBox(
+                                      width: 4,
+                                    ),
+                                    const Text("4.5", style: TextStyle(color: Colors.white,fontSize: 12,fontWeight: FontWeight.w400),),
+                                  ],
+                                ),
+                                const Text("View Details", style: TextStyle(color: Colors.white,fontSize: 12,fontWeight: FontWeight.w400),),
+                              ],
+                            )),
+                      ),
+                    ) : Container(
+                        margin: const EdgeInsets.symmetric(horizontal: 10),
+                        width: 160,
+                        height: 220,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(14),
 
-                          ),
-                          alignment: Alignment.center,
-                          child: const Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text("View All", style: TextStyle(color: Colors.red ,fontSize: 14,fontWeight: FontWeight.w600),),
-                              SizedBox(width: 4,),
-                              Icon(Icons.chevron_right_sharp, color: Colors.red,)
-                            ],
-                          )
-                      );
-                    },),
-                ),
+                        ),
+                        alignment: Alignment.center,
+                        child: const Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text("View All", style: TextStyle(color: Colors.red ,fontSize: 14,fontWeight: FontWeight.w600),),
+                            SizedBox(width: 4,),
+                            Icon(Icons.chevron_right_sharp, color: Colors.red,)
+                          ],
+                        )
+                    );
+                  },),
               ),
 
               const SizedBox(
@@ -630,91 +627,89 @@ class _UserDashBoardState extends State<UserDashBoard> {
               SizedBox(
                 width: double.infinity,
                 height: 240,
-                child: Hero(
-                  tag: "bookImage",
-                  child: ListView.builder(
-                    itemCount: 6,
-                    scrollDirection: Axis.horizontal,
-                    physics: const ScrollPhysics(),
-                    shrinkWrap: true,
-                    itemBuilder: (context, index) {
-                      return index != 6 ? GestureDetector(
-                        onTap: (){
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => BookDescription( bookImage: bookImages[index]),));
-                        },
-                        child: Container(
-                          margin: const EdgeInsets.symmetric(horizontal: 10 , vertical: 10),
-                          width: 160,
-                          height: 220,
-                          decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(14),
-                              image: DecorationImage(
-                                  fit: BoxFit.cover,
-                                  colorFilter: ColorFilter.mode(Colors.black.withOpacity(0.5), BlendMode.darken),
-                                  image: NetworkImage(AuthImages[index])),
-                              boxShadow: [
-                                BoxShadow(
-                                    color: Colors.grey.shade400,
-                                    spreadRadius: 1,
-                                    blurRadius: 10
-                                )
-                              ]
-                          ),
-                          child: Container(
-                              margin: const EdgeInsets.only(left: 10, top: 140),
-                              child:  Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(AuthName[index], style: TextStyle(color: Colors.white,fontSize: 16,fontWeight: FontWeight.w600),),
-                                  Row(
-                                    children: [
-                                      RatingBar.builder(
-                                        initialRating: 5,
-                                        minRating: 1,
-                                        direction: Axis.horizontal,
-                                        allowHalfRating: true,
-                                        itemCount: 5,
-                                        itemSize: 12,
-                                        itemPadding: const EdgeInsets.symmetric(horizontal: 1.0),
-                                        itemBuilder: (context, _) => const Icon(
-                                          Icons.star,
-                                          color: Colors.amber,
-                                        ),
-                                        onRatingUpdate: (rating) {
-                                        },
-                                      ),
-                                      const SizedBox(
-                                        width: 4,
-                                      ),
-                                      const Text("4.5", style: TextStyle(color: Colors.white,fontSize: 12,fontWeight: FontWeight.w400),),
-                                    ],
-                                  ),
-                                  const Text("View Details", style: TextStyle(color: Colors.white,fontSize: 12,fontWeight: FontWeight.w400),),
-                                ],
-                              )),
-                        ),
-                      ) : Container(
-                          margin: const EdgeInsets.symmetric(horizontal: 10),
-                          width: 160,
-                          height: 220,
-                          decoration: BoxDecoration(
+                child: ListView.builder(
+                  itemCount: 6,
+                  scrollDirection: Axis.horizontal,
+                  physics: const ScrollPhysics(),
+                  shrinkWrap: true,
+                  itemBuilder: (context, index) {
+                    return index != 6 ? GestureDetector(
+                      onTap: (){
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => CateProduct(bookCate: CatName[index])));
+
+                      },
+                      child: Container(
+                        margin: const EdgeInsets.symmetric(horizontal: 10 , vertical: 10),
+                        width: 160,
+                        height: 220,
+                        decoration: BoxDecoration(
                             color: Colors.white,
                             borderRadius: BorderRadius.circular(14),
+                            image: DecorationImage(
+                                fit: BoxFit.cover,
+                                colorFilter: ColorFilter.mode(Colors.black.withOpacity(0.5), BlendMode.darken),
+                                image: NetworkImage(AuthImages[index])),
+                            boxShadow: [
+                              BoxShadow(
+                                  color: Colors.grey.shade400,
+                                  spreadRadius: 1,
+                                  blurRadius: 10
+                              )
+                            ]
+                        ),
+                        child: Container(
+                            margin: const EdgeInsets.only(left: 10, top: 140),
+                            child:  Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(AuthName[index], style: const TextStyle(color: Colors.white,fontSize: 16,fontWeight: FontWeight.w600),),
+                                Row(
+                                  children: [
+                                    RatingBar.builder(
+                                      initialRating: 5,
+                                      minRating: 1,
+                                      direction: Axis.horizontal,
+                                      allowHalfRating: true,
+                                      itemCount: 5,
+                                      itemSize: 12,
+                                      itemPadding: const EdgeInsets.symmetric(horizontal: 1.0),
+                                      itemBuilder: (context, _) => const Icon(
+                                        Icons.star,
+                                        color: Colors.amber,
+                                      ),
+                                      onRatingUpdate: (rating) {
+                                      },
+                                    ),
+                                    const SizedBox(
+                                      width: 4,
+                                    ),
+                                    const Text("4.5", style: TextStyle(color: Colors.white,fontSize: 12,fontWeight: FontWeight.w400),),
+                                  ],
+                                ),
+                                const Text("View Details", style: TextStyle(color: Colors.white,fontSize: 12,fontWeight: FontWeight.w400),),
+                              ],
+                            )),
+                      ),
+                    ) : Container(
+                        margin: const EdgeInsets.symmetric(horizontal: 10),
+                        width: 160,
+                        height: 220,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(14),
 
-                          ),
-                          alignment: Alignment.center,
-                          child: const Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text("View All", style: TextStyle(color: Colors.red ,fontSize: 14,fontWeight: FontWeight.w600),),
-                              SizedBox(width: 4,),
-                              Icon(Icons.chevron_right_sharp, color: Colors.red,)
-                            ],
-                          )
-                      );
-                    },),
-                ),
+                        ),
+                        alignment: Alignment.center,
+                        child: const Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text("View All", style: TextStyle(color: Colors.red ,fontSize: 14,fontWeight: FontWeight.w600),),
+                            SizedBox(width: 4,),
+                            Icon(Icons.chevron_right_sharp, color: Colors.red,)
+                          ],
+                        )
+                    );
+                  },),
               ),
 
             ],

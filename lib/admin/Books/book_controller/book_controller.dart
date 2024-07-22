@@ -84,6 +84,25 @@ class BookController{
     });
    }
 
+  Stream<List<BookModel>> getSpecificCateBooks(String? bookCate){
+    return FirebaseFirestore.instance.collection("Books").where("bookCate", isEqualTo: bookCate).snapshots().map((snapshot){
+      return snapshot.docs.map((doc){
+        Map<String, dynamic> data = doc.data();
+        return BookModel(
+            bookID: data['bookID'],
+            bookName: data['bookName'],
+            getImage: data['bookImage'],
+            bookPrice: data['bookPrice'],
+            bookISBN: data['bookISBN'],
+            bookCategory: data['bookCate'],
+            bookAuthor: data['bookAuthor'],
+            bookDescription: data['bookDesc']
+        );
+      }).toList();
+    });
+  }
+
+
    void updateBook(BookModel bookModel, BuildContext context)async{
      try{
        if(bookModel.bookImageWeb != null){

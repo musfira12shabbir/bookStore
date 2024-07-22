@@ -122,6 +122,58 @@ class UserRegisterLogin{
     });
   }
 
+  void userUpdate(UserModel userModel, BuildContext context)async{
+    try{
+      if(userModel.userImageWeb != null){
+        FirebaseStorage.instance.refFromURL(userModel.getImage!).delete();
+        UploadTask uploadTask =  FirebaseStorage.instance.ref().child("userImages").child(userModel.userID!).putData(userModel.userImageWeb!);
+        TaskSnapshot taskSnapshot = await uploadTask;
+        String userImage = await taskSnapshot.ref.getDownloadURL();
+
+        FirebaseFirestore.instance.collection("userData").doc(userModel.userID).update({
+          "uName" : userModel.userName,
+          "uImage" : userImage,
+          "uEmail" : userModel.userEmail,
+          "uAddress" : userModel.userAddress,
+          "uPassword" : userModel.userPassword,
+          "uAge" : userModel.userAge,
+        });
+        if(context.mounted){
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Update Successful"),backgroundColor: Colors.green, margin: EdgeInsets.symmetric(horizontal: 10, vertical: 10),behavior: SnackBarBehavior.floating,));
+          Navigator.push(context, MaterialPageRoute(builder:  (context) => const LoginScreen(),));
+        }
+      }
+      else if(userModel.userImage != null){
+
+        FirebaseStorage.instance.refFromURL(userModel.getImage!).delete();
+        UploadTask uploadTask = FirebaseStorage.instance.ref().child("userImages").child(userModel.userID!).putFile(userModel.userImage!);
+        TaskSnapshot taskSnapshot = await uploadTask;
+        String userImage = await taskSnapshot.ref.getDownloadURL();
+
+        FirebaseFirestore.instance.collection("userData").doc(userModel.userID).update({
+          "uName" : userModel.userName,
+          "uImage" : userImage,
+          "uEmail" : userModel.userEmail,
+          "uAddress" : userModel.userAddress,
+          "uPassword" : userModel.userPassword,
+          "uAge" : userModel.userAge,
+        });
+        if(context.mounted){
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Update Successful"),backgroundColor: Colors.green, margin: EdgeInsets.symmetric(horizontal: 10, vertical: 10),behavior: SnackBarBehavior.floating,));
+          Navigator.push(context, MaterialPageRoute(builder:  (context) => const LoginScreen(),));
+        }
+      }
+      else{
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Image not picked"),backgroundColor: Colors.green, margin: EdgeInsets.symmetric(horizontal: 10, vertical: 10),behavior: SnackBarBehavior.floating,));
+      }
+    } on FirebaseAuthException catch(ex){
+      if(context.mounted){
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Something went Wrong"),backgroundColor: Colors.red, margin: EdgeInsets.symmetric(horizontal: 10, vertical: 10),behavior: SnackBarBehavior.floating,));
+      }
+    }
+
+  }
+
   void userDelete(String? userID, String? userImage, BuildContext context)async{
     try{
       await FirebaseStorage.instance.refFromURL(userImage!).delete();

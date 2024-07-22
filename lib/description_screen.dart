@@ -4,9 +4,15 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 class BookDescription extends StatefulWidget {
 
+  const BookDescription({super.key, required this.bookID,required this.bookImage, required this.bookCate, required this.bookAuthor, required this.bookName, required this.bookDesc, required this.bookiSBN, required this.bookPrice});
+  final String bookName;
+  final String bookID;
   final String bookImage;
-  const BookDescription({super.key, required this.bookImage});
-
+  final String bookPrice;
+  final String bookDesc;
+  final String bookiSBN;
+  final String bookAuthor;
+  final String bookCate;
   @override
   State<BookDescription> createState() => _BookDescriptionState();
 }
@@ -21,7 +27,7 @@ class _BookDescriptionState extends State<BookDescription> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
-        title: Text("Book Name",style: TextStyle(color: Colors.black),overflow: TextOverflow.ellipsis,),
+        title: Text(widget.bookName,style: const TextStyle(color: Colors.black),overflow: TextOverflow.ellipsis,),
         centerTitle: true,
       ),
       body: SingleChildScrollView(
@@ -69,12 +75,12 @@ class _BookDescriptionState extends State<BookDescription> {
                       children: [
 
                         Text("Author Name:",style: TextStyle(color: Colors.grey.shade400,fontSize: 14, fontWeight: FontWeight.w400),),
-                        Text("Muhammad Umar",style: TextStyle(color: Colors.black,fontSize: 16, fontWeight: FontWeight.w600),),
+                        Text(widget.bookAuthor,style: const TextStyle(color: Colors.black,fontSize: 16, fontWeight: FontWeight.w600),),
                         const SizedBox(
                           height: 16,
                         ),
                         Text("Category:",style: TextStyle(color: Colors.grey.shade400,fontSize: 14, fontWeight: FontWeight.w400),),
-                        Text("Fantasy",style: TextStyle(color: Colors.black,fontSize: 16, fontWeight: FontWeight.w600),),
+                        Text(widget.bookCate,style: const TextStyle(color: Colors.black,fontSize: 16, fontWeight: FontWeight.w600),),
                         const SizedBox(
                           height: 16,
                         ),
@@ -99,7 +105,7 @@ class _BookDescriptionState extends State<BookDescription> {
                           height: 16,
                         ),
                         Text("Date Published:",style: TextStyle(color: Colors.grey.shade400,fontSize: 14, fontWeight: FontWeight.w400),),
-                        Text("2024-02-21",style: TextStyle(color: Colors.black,fontSize: 16, fontWeight: FontWeight.w600),),
+                        const Text("2024-02-21",style: TextStyle(color: Colors.black,fontSize: 16, fontWeight: FontWeight.w600),),
                       ],
                     ),
                   )
@@ -149,7 +155,7 @@ class _BookDescriptionState extends State<BookDescription> {
             Container(
               margin: const EdgeInsets.symmetric(horizontal: 20),
               width: double.infinity,
-              child: Text("adskjfhkjhasdfkhasdhflksdhalfkhklsdhflkasdadsadsasdadasdadasdadshdflkhslkajdhflkhaskldhfklhsdfkhskldhflksahdflkhsdfklhsakldfhklhsakdjhfkshdfkhkladsfkjdshfkjadshfkjhsdakjfhkjasdfhkjsadhfkjhasdfkjhadskljfhkjasdfhkjdsfh",overflow: TextOverflow.fade,),
+              child: Text(widget.bookDesc,overflow: TextOverflow.fade,),
             ),
 
             const SizedBox(
@@ -202,7 +208,7 @@ class _BookDescriptionState extends State<BookDescription> {
                        width: 40,
                        height: 40,
                        alignment: Alignment.center,
-                       decoration: BoxDecoration(
+                       decoration: const BoxDecoration(
                            color: Colors.black,
                            borderRadius: BorderRadius.only(topLeft: Radius.circular(10), bottomLeft: Radius.circular(10))
                        ),
@@ -212,22 +218,22 @@ class _BookDescriptionState extends State<BookDescription> {
                              cartNumber  = cartNumber - 1;
                            }
                          });
-                       }, icon: Icon(Icons.keyboard_arrow_left,color: Colors.white,)),
+                       }, icon: const Icon(Icons.keyboard_arrow_left,color: Colors.white,)),
                      ),
                      Container(
                        width: 80,
                        height: 40,
                        alignment: Alignment.center,
-                       decoration: BoxDecoration(
+                       decoration: const BoxDecoration(
                          color: Colors.black,
                        ),
-                       child: cartNumber == 1 ? Text("Add To Cart",style: TextStyle(color: Colors.white,fontSize: 12,fontWeight: FontWeight.w600),) : Text("$cartNumber",style: TextStyle(color: Colors.white,fontWeight: FontWeight.w600),),
+                       child: cartNumber == 1 ? const Text("Add To Cart",style: TextStyle(color: Colors.white,fontSize: 12,fontWeight: FontWeight.w600),) : Text("$cartNumber",style: const TextStyle(color: Colors.white,fontWeight: FontWeight.w600),),
                      ),
                      Container(
                        width: 40,
                        height: 40,
                        alignment: Alignment.center,
-                       decoration: BoxDecoration(
+                       decoration: const BoxDecoration(
                            color: Colors.black,
                            borderRadius: BorderRadius.only(topRight: Radius.circular(10), bottomRight: Radius.circular(10))
                        ),
@@ -235,7 +241,7 @@ class _BookDescriptionState extends State<BookDescription> {
                          setState(() {
                            cartNumber = cartNumber + 1;
                          });
-                       }, icon: Icon(Icons.keyboard_arrow_right,color: Colors.white,)),
+                       }, icon: const Icon(Icons.keyboard_arrow_right,color: Colors.white,)),
                      )
                    ],
                  ),
@@ -248,7 +254,7 @@ class _BookDescriptionState extends State<BookDescription> {
                         border: Border.all(color: Colors.black,width: 1.6),
                         borderRadius: BorderRadius.circular(12)
                     ),
-                    child: Text("Buy Now",style: TextStyle(color: Colors.red,fontSize: 12,fontWeight: FontWeight.w600),),
+                    child: const Text("Buy Now",style: TextStyle(color: Colors.red,fontSize: 12,fontWeight: FontWeight.w600),),
                   ),
                 ],
               ),

@@ -41,7 +41,7 @@ class _CartScreenState extends State<CartScreen> {
         itemBuilder: (context, index) {
         return GestureDetector(
           onTap: () {
-            Navigator.push(context, MaterialPageRoute(builder: (context) => BookDescription(bookImage: bookImages[index],),));
+            // Navigator.push(context, MaterialPageRoute(builder: (context) => BookDescription(bookImage: bookImages[index],),));
           },
           child: Container(
             margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
