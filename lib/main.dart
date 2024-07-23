@@ -1,5 +1,3 @@
-
-import 'package:eproject/chatbot.dart';
 import 'package:eproject/firebase_options.dart';
 import 'package:eproject/splash_screen.dart';
 

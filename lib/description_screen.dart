@@ -1,3 +1,6 @@
+import 'package:eproject/admin/Cart/cart_controller.dart';
+import 'package:eproject/admin/Cart/cart_model.dart';
+import 'package:eproject/admin/Users/user_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -20,6 +23,22 @@ class BookDescription extends StatefulWidget {
 class _BookDescriptionState extends State<BookDescription> {
 
   int cartNumber = 1;
+
+  CartController cartController = CartController();
+
+  String uEmail = "";
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    UserRegisterLogin.userCredGet().then((val){
+      setState(() {
+        uEmail = val;
+      });
+    });
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     timeDilation = 2.0;
@@ -220,14 +239,27 @@ class _BookDescriptionState extends State<BookDescription> {
                          });
                        }, icon: const Icon(Icons.keyboard_arrow_left,color: Colors.white,)),
                      ),
-                     Container(
-                       width: 80,
-                       height: 40,
-                       alignment: Alignment.center,
-                       decoration: const BoxDecoration(
-                         color: Colors.black,
+                     GestureDetector(
+                       onTap: (){
+                         var totalPrice = cartNumber * int.parse(widget.bookPrice);
+                         cartController.cartAdd(CartModel(
+                           bookQuantity: "$cartNumber",
+                           bookName: widget.bookName,
+                           bookPrice: "$totalPrice",
+                           bookImage: widget.bookImage,
+                           bookID: widget.bookID,
+                           userEmail: uEmail
+                         ), context);
+                       },
+                       child: Container(
+                         width: 80,
+                         height: 40,
+                         alignment: Alignment.center,
+                         decoration: const BoxDecoration(
+                           color: Colors.black,
+                         ),
+                         child: cartNumber == 1 ? const Text("Add To Cart",style: TextStyle(color: Colors.white,fontSize: 12,fontWeight: FontWeight.w600),) : Text("$cartNumber",style: const TextStyle(color: Colors.white,fontWeight: FontWeight.w600),),
                        ),
-                       child: cartNumber == 1 ? const Text("Add To Cart",style: TextStyle(color: Colors.white,fontSize: 12,fontWeight: FontWeight.w600),) : Text("$cartNumber",style: const TextStyle(color: Colors.white,fontWeight: FontWeight.w600),),
                      ),
                      Container(
                        width: 40,

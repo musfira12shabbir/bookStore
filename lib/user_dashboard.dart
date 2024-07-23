@@ -1,7 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:eproject/about_screen.dart';
-import 'package:eproject/addtocart.dart';
 import 'package:eproject/admin/Books/book_views/fetch_book_screen.dart';
+import 'package:eproject/admin/Cart/cart_fetch.dart';
 import 'package:eproject/admin/Users/user_controller.dart';
 import 'package:eproject/admin/Users/user_model.dart';
 import 'package:eproject/constants/cate_product.dart';
@@ -152,7 +152,7 @@ class _UserDashBoardState extends State<UserDashBoard> {
 
                     GestureDetector(
                       onTap: (){
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => const CartScreen(),));
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => const CartFetch(),));
                       },
                       child: Container(
                         margin: const EdgeInsets.symmetric(vertical: 10),
