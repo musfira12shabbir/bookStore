@@ -1,9 +1,13 @@
 import 'package:eproject/admin/Cart/cart_controller.dart';
 import 'package:eproject/admin/Cart/cart_model.dart';
 import 'package:eproject/admin/Users/user_controller.dart';
+import 'package:eproject/admin/Wishlist/wish_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:uuid/uuid.dart';
+
+import 'admin/Wishlist/wish_model.dart';
 
 class BookDescription extends StatefulWidget {
 
@@ -25,6 +29,7 @@ class _BookDescriptionState extends State<BookDescription> {
   int cartNumber = 1;
 
   CartController cartController = CartController();
+  WishController wishController = WishController();
 
   String uEmail = "";
 
@@ -48,6 +53,18 @@ class _BookDescriptionState extends State<BookDescription> {
         elevation: 0,
         title: Text(widget.bookName,style: const TextStyle(color: Colors.black),overflow: TextOverflow.ellipsis,),
         centerTitle: true,
+        actions: [
+          IconButton(onPressed: () {
+            wishController.wishAdd(WishModel(
+              userEmail: uEmail,
+              bookImage: widget.bookImage,
+              bookName: widget.bookName,
+              bookID: widget.bookID,
+              wishID: const Uuid().v1()
+            ), context);
+          }, icon: const Icon(Icons.heart_broken)),
+          const SizedBox(width: 4,)
+        ],
       ),
       body: SingleChildScrollView(
         physics: const ScrollPhysics(),

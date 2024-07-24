@@ -31,7 +31,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.black, // Background color of the app bar
+        automaticallyImplyLeading: false,
+        backgroundColor: Colors.black,
         title: const Center(child: Text('Profile Page',style: TextStyle(color: Colors.white),)), // Custom text for the app bar title
       ),
       body: StreamBuilder(stream: userRegisterLogin.getUser(userEmail), builder: (context, AsyncSnapshot<List<UserModel>> snapshot) {

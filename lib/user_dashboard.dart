@@ -6,6 +6,7 @@ import 'package:eproject/admin/Books/book_views/fetch_book_screen.dart';
 import 'package:eproject/admin/Cart/cart_fetch.dart';
 import 'package:eproject/admin/Users/user_controller.dart';
 import 'package:eproject/admin/Users/user_model.dart';
+import 'package:eproject/admin/Wishlist/wish_fetch.dart';
 import 'package:eproject/constants/cate_product.dart';
 import 'package:eproject/description_screen.dart';
 import 'package:eproject/profile_screen.dart';
@@ -140,7 +141,7 @@ class _UserDashBoardState extends State<UserDashBoard> {
 
                     GestureDetector(
                       onTap: (){
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => const WishListScreen(),));
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => const WishFetch(),));
                       },
                       child: Container(
                         margin: const EdgeInsets.symmetric(vertical: 10),
@@ -377,7 +378,7 @@ class _UserDashBoardState extends State<UserDashBoard> {
                 child: StreamBuilder(stream: _book.getBooks(), builder: (context, AsyncSnapshot<List<BookModel>> snapshot) {
 
                   if(snapshot.connectionState == ConnectionState.waiting){
-                    return const CircularProgressIndicator();
+                    return const Center(child: Text("Getting Books"),);
                   }
 
                   if(snapshot.hasData){

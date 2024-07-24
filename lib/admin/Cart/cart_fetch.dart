@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:eproject/admin/Cart/cart_controller.dart';
 import 'package:eproject/admin/Cart/cart_model.dart';
 import 'package:eproject/admin/Users/user_controller.dart';
@@ -16,20 +17,26 @@ class _CartFetchState extends State<CartFetch> {
   CartController cartController = CartController();
 
   String uEmail = "";
-  List<int> totalPrices = [];
-  int cartPrice = 0;
 
-  void calculateTotal(){
-    for(int price in totalPrices){
+  List cartPrice = [];
+
+  int tPrice = 0;
+
+  void calculator(){
+    for(int x in cartPrice){
+      tPrice = tPrice + x;
+      debugPrint("$tPrice");
       setState(() {
-        cartPrice += price;
+
       });
     }
   }
 
   @override
   void initState() {
-    calculateTotal();
+    Timer(const Duration(milliseconds: 1000), () {
+      calculator();
+    },);
     UserRegisterLogin.userCredGet().then((val){
       setState(() {
         uEmail = val;
@@ -73,13 +80,17 @@ class _CartFetchState extends State<CartFetch> {
                   String totalPrice = cartData.totalPrice!;
                    String cartID = cartData.cartID!;
 
-                   int tPrice = int.parse(totalPrice);
+                   cartPrice.add(int.parse(totalPrice));
 
-                  totalPrices.add(tPrice);
+
 
                   return GestureDetector(
                     onTap: () {
                       cartController.cartDelete(cartID, context);
+                      tPrice = tPrice - int.parse(totalPrice);
+                      setState(() {
+
+                      });
                       // Navigator.push(context, MaterialPageRoute(builder: (context) => BookDescription(bookImage: bookImages[index],),));
                     },
                     child: Container(
@@ -164,7 +175,7 @@ class _CartFetchState extends State<CartFetch> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const Text("Total Price:",style: TextStyle(color: Colors.black54,fontSize: 14, fontWeight: FontWeight.w800),),
-                Text("$cartPrice",style: const TextStyle(color: Colors.black,fontSize: 16, fontWeight: FontWeight.w800),),
+                Text("\$ $tPrice",style: const TextStyle(color: Colors.black,fontSize: 16, fontWeight: FontWeight.w800),),
               ],
             ),
             Column(
