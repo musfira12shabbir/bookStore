@@ -16,9 +16,20 @@ class _CartFetchState extends State<CartFetch> {
   CartController cartController = CartController();
 
   String uEmail = "";
+  List<int> totalPrices = [];
+  int cartPrice = 0;
+
+  void calculateTotal(){
+    for(int price in totalPrices){
+      setState(() {
+        cartPrice += price;
+      });
+    }
+  }
 
   @override
   void initState() {
+    calculateTotal();
     UserRegisterLogin.userCredGet().then((val){
       setState(() {
         uEmail = val;
@@ -52,15 +63,19 @@ class _CartFetchState extends State<CartFetch> {
               return cartDataLength != 0 ? ListView.builder(
                 itemCount: cartDataLength,
                 itemBuilder: (context, index) {
-
                   CartModel cartData = snapshot.data![index];
 
-                  String bookID = cartData.bookID!;
+                  // String bookID = cartData.bookID!;
                   String bookName = cartData.bookName!;
                   String bookImage = cartData.bookImage!;
                   String bookQuantity = cartData.bookQuantity!;
                   String bookPrice = cartData.bookPrice!;
+                  String totalPrice = cartData.totalPrice!;
                    String cartID = cartData.cartID!;
+
+                   int tPrice = int.parse(totalPrice);
+
+                  totalPrices.add(tPrice);
 
                   return GestureDetector(
                     onTap: () {
@@ -118,7 +133,7 @@ class _CartFetchState extends State<CartFetch> {
                                     const SizedBox(
                                       width: 6,
                                     ),
-                                    const Text("1,0000",style: TextStyle(color: Colors.black45,fontSize: 12, fontWeight: FontWeight.w400),),
+                                    Text(totalPrice,style: const TextStyle(color: Colors.black45,fontSize: 12, fontWeight: FontWeight.w400),),
                                   ],
                                 )
                               ],
@@ -144,12 +159,12 @@ class _CartFetchState extends State<CartFetch> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const Column(
+             Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text("Total Price:",style: TextStyle(color: Colors.black54,fontSize: 14, fontWeight: FontWeight.w800),),
-                Text("16,000/=",style: TextStyle(color: Colors.black,fontSize: 16, fontWeight: FontWeight.w800),),
+                const Text("Total Price:",style: TextStyle(color: Colors.black54,fontSize: 14, fontWeight: FontWeight.w800),),
+                Text("$cartPrice",style: const TextStyle(color: Colors.black,fontSize: 16, fontWeight: FontWeight.w800),),
               ],
             ),
             Column(

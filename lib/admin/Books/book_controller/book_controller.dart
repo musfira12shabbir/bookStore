@@ -102,6 +102,29 @@ class BookController{
     });
   }
 
+  Stream<List<BookModel>> getSearchBook({String? searchQuery}) {
+    return collectionReference.snapshots().map((snapshot) {
+      return snapshot.docs.map((doc) {
+        Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
+        return BookModel(
+          bookID: data['bookID'],
+          bookName: data['bookName'],
+          getImage: data['bookImage'],
+          bookPrice: data['bookPrice'],
+          bookISBN: data['bookISBN'],
+          bookCategory: data['bookCate'],
+          bookAuthor: data['bookAuthor'],
+          bookDescription: data['bookDesc'],
+        );
+      }).where((book) {
+        if (searchQuery == null || searchQuery.isEmpty) {
+          return true;
+        } else {
+          return book.bookName!.toLowerCase().contains(searchQuery.toLowerCase());
+        }
+      }).toList();
+    });
+  }
 
    void updateBook(BookModel bookModel, BuildContext context)async{
      try{

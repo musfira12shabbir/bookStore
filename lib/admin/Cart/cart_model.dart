@@ -6,6 +6,7 @@ class CartModel{
   final String? bookImage;
   final String? bookQuantity;
   final String? bookPrice;
+  final String? totalPrice;
   final String? userEmail;
 
   CartModel(
@@ -15,5 +16,6 @@ class CartModel{
       this.bookImage,
       this.bookQuantity,
       this.bookPrice,
+        this.totalPrice,
       this.userEmail});
 }

@@ -123,8 +123,9 @@ class _BookDescriptionState extends State<BookDescription> {
                         const SizedBox(
                           height: 16,
                         ),
-                        Text("Date Published:",style: TextStyle(color: Colors.grey.shade400,fontSize: 14, fontWeight: FontWeight.w400),),
-                        const Text("2024-02-21",style: TextStyle(color: Colors.black,fontSize: 16, fontWeight: FontWeight.w600),),
+                        Text("Book Price:",style: TextStyle(color: Colors.grey.shade400,fontSize: 14, fontWeight: FontWeight.w400),),
+                        Text("\$ ${widget.bookPrice}",style: const TextStyle(color: Colors.black,fontSize: 16, fontWeight: FontWeight.w600),),
+
                       ],
                     ),
                   )
@@ -245,7 +246,8 @@ class _BookDescriptionState extends State<BookDescription> {
                          cartController.cartAdd(CartModel(
                            bookQuantity: "$cartNumber",
                            bookName: widget.bookName,
-                           bookPrice: "$totalPrice",
+                           bookPrice: widget.bookPrice,
+                           totalPrice: "$totalPrice",
                            bookImage: widget.bookImage,
                            bookID: widget.bookID,
                            userEmail: uEmail
@@ -261,6 +263,7 @@ class _BookDescriptionState extends State<BookDescription> {
                          child: cartNumber == 1 ? const Text("Add To Cart",style: TextStyle(color: Colors.white,fontSize: 12,fontWeight: FontWeight.w600),) : Text("$cartNumber",style: const TextStyle(color: Colors.white,fontWeight: FontWeight.w600),),
                        ),
                      ),
+
                      Container(
                        width: 40,
                        height: 40,
@@ -290,7 +293,10 @@ class _BookDescriptionState extends State<BookDescription> {
                   ),
                 ],
               ),
-            )
+            ),
+
+            const SizedBox(height: 20,),
+
           ],
         ),
       ),

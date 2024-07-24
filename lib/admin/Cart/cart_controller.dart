@@ -20,6 +20,7 @@ class CartController{
         "bookImage" : cartModel.bookImage!,
         "bookQuantity" : cartModel.bookQuantity!,
         "bookPrice" : cartModel.bookPrice!,
+        "totalPrice" : cartModel.totalPrice!,
         "userEmail" : cartModel.userEmail!,
       };
 
@@ -45,6 +46,7 @@ class CartController{
           bookImage: cartData['bookImage'],
           bookName: cartData['bookName'],
           bookPrice: cartData['bookPrice'],
+          totalPrice: cartData['totalPrice'],
           bookQuantity: cartData['bookQuantity'],
           userEmail: cartData['userEmail']
         );

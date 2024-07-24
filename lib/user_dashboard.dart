@@ -1,21 +1,21 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:eproject/about_screen.dart';
+import 'package:eproject/admin/Books/book_controller/book_controller.dart';
+import 'package:eproject/admin/Books/book_model/book_model.dart';
 import 'package:eproject/admin/Books/book_views/fetch_book_screen.dart';
 import 'package:eproject/admin/Cart/cart_fetch.dart';
 import 'package:eproject/admin/Users/user_controller.dart';
 import 'package:eproject/admin/Users/user_model.dart';
 import 'package:eproject/constants/cate_product.dart';
+import 'package:eproject/description_screen.dart';
 import 'package:eproject/profile_screen.dart';
 import 'package:eproject/wishlist.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:flutter/widgets.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 import 'contact_screen.dart';
-import 'description_screen.dart';
 
 
 class UserDashBoard extends StatefulWidget {
@@ -80,6 +80,7 @@ class _UserDashBoardState extends State<UserDashBoard> {
 
 
   UserRegisterLogin userRegisterLogin = UserRegisterLogin();
+  final BookController _book = BookController();
 
   @override
   void initState() {
@@ -373,89 +374,121 @@ class _UserDashBoardState extends State<UserDashBoard> {
               SizedBox(
                 width: double.infinity,
                 height: 240,
-                child: ListView.builder(
-                  itemCount: 6,
-                  scrollDirection: Axis.horizontal,
-                  physics: const ScrollPhysics(),
-                  shrinkWrap: true,
-                  itemBuilder: (context, index) {
-                  return index != 6 ? GestureDetector(
-                    onTap: (){
-                      // Navigator.push(context, MaterialPageRoute(builder: (context) => BookDescription( bookImage: NewToShell[index]),));
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => CateProduct(bookCate: CatName[index])));
+                child: StreamBuilder(stream: _book.getBooks(), builder: (context, AsyncSnapshot<List<BookModel>> snapshot) {
 
-                    },
-                    child: Container(
-                      margin: const EdgeInsets.symmetric(horizontal: 10 , vertical: 10),
-                      width: 160,
-                      height: 220,
-                      decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(14),
-                          image: DecorationImage(
-                              fit: BoxFit.cover,
-                              colorFilter: ColorFilter.mode(Colors.black.withOpacity(0.5), BlendMode.darken),
-                              image: NetworkImage(NewToShell[index])),
-                          boxShadow: [
-                            BoxShadow(
-                                color: Colors.grey.shade400,
-                                spreadRadius: 1,
-                                blurRadius: 10
-                            )
-                          ]
-                      ),
-                      child: Container(
-                          margin: const EdgeInsets.only(left: 10, top: 140),
-                          child:  Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(NewToShellName[index], style: const TextStyle(color: Colors.white,fontSize: 16,fontWeight: FontWeight.w600),),
-                              Row(
-                                children: [
-                                  RatingBar.builder(
-                                    initialRating: 5,
-                                    minRating: 1,
-                                    direction: Axis.horizontal,
-                                    allowHalfRating: true,
-                                    itemCount: 5,
-                                    itemSize: 12,
-                                    itemPadding: const EdgeInsets.symmetric(horizontal: 1.0),
-                                    itemBuilder: (context, _) => const Icon(
-                                      Icons.star,
-                                      color: Colors.amber,
+                  if(snapshot.connectionState == ConnectionState.waiting){
+                    return const CircularProgressIndicator();
+                  }
+
+                  if(snapshot.hasData){
+                    return ListView.builder(
+                      itemCount: 6,
+                      scrollDirection: Axis.horizontal,
+                      physics: const ScrollPhysics(),
+                      shrinkWrap: true,
+                      itemBuilder: (context, index) {
+                        BookModel bookData = snapshot.data![index];
+                        return index != 5 ? GestureDetector(
+                          onTap: (){
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => BookDescription(
+                              bookID: bookData.bookID!,
+                              bookImage: bookData.getImage!,
+                              bookName: bookData.bookName!,
+                              bookPrice: bookData.bookPrice!,
+                              bookAuthor: bookData.bookAuthor!,
+                              bookCate: bookData.bookCategory!,
+                              bookDesc: bookData.bookDescription!,
+                              bookiSBN: bookData.bookISBN!,
+                            ),));
+                            // Navigator.push(context, MaterialPageRoute(builder: (context) => CateProduct(bookCate: CatName[index])));
+
+                          },
+                          child: Container(
+                            margin: const EdgeInsets.symmetric(horizontal: 10 , vertical: 10),
+                            width: 160,
+                            height: 220,
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(14),
+                                image: DecorationImage(
+                                    fit: BoxFit.cover,
+                                    colorFilter: ColorFilter.mode(Colors.black.withOpacity(0.5), BlendMode.darken),
+                                    image: NetworkImage(bookData.getImage!)),
+                                boxShadow: [
+                                  BoxShadow(
+                                      color: Colors.grey.shade400,
+                                      spreadRadius: 1,
+                                      blurRadius: 10
+                                  )
+                                ]
+                            ),
+                            child: Container(
+                                margin: const EdgeInsets.only(left: 10, top: 140),
+                                child:  Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    SizedBox(
+                                        width: 200,
+                                        child: Text(bookData.bookName!, style: const TextStyle(color: Colors.white,fontSize: 16,fontWeight: FontWeight.w600),overflow: TextOverflow.ellipsis,)),
+                                    Row(
+                                      children: [
+                                        RatingBar.builder(
+                                          initialRating: 5,
+                                          minRating: 1,
+                                          direction: Axis.horizontal,
+                                          allowHalfRating: true,
+                                          itemCount: 5,
+                                          itemSize: 12,
+                                          itemPadding: const EdgeInsets.symmetric(horizontal: 1.0),
+                                          itemBuilder: (context, _) => const Icon(
+                                            Icons.star,
+                                            color: Colors.amber,
+                                          ),
+                                          onRatingUpdate: (rating) {
+                                          },
+                                        ),
+                                        const SizedBox(
+                                          width: 4,
+                                        ),
+                                        const Text("4.5", style: TextStyle(color: Colors.white,fontSize: 12,fontWeight: FontWeight.w400),),
+                                      ],
                                     ),
-                                    onRatingUpdate: (rating) {
-                                    },
-                                  ),
-                                  const SizedBox(
-                                    width: 4,
-                                  ),
-                                  const Text("4.5", style: TextStyle(color: Colors.white,fontSize: 12,fontWeight: FontWeight.w400),),
-                                ],
-                              ),
-                              const Text("View Details", style: TextStyle(color: Colors.white,fontSize: 12,fontWeight: FontWeight.w400),),
-                            ],
-                          )),
-                    ),
-                  ) : Container(
-                    margin: const EdgeInsets.symmetric(horizontal: 10),
-                    width: 160,
-                    height: 220,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(14),
+                                    const Text("View Details", style: TextStyle(color: Colors.white,fontSize: 12,fontWeight: FontWeight.w400),),
+                                  ],
+                                )),
+                          ),
+                        ) : GestureDetector(
+                          onTap: (){
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => const CateProduct(bookCate: "All")));
+                          },
+                          child: Container(
+                              margin: const EdgeInsets.symmetric(horizontal: 10),
+                              width: 160,
+                              height: 220,
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(14),
 
-                      ),
-                      alignment: Alignment.center,
-                    child: const Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text("View All", style: TextStyle(color: Colors.red ,fontSize: 14,fontWeight: FontWeight.w600),),
-                        SizedBox(width: 4,),
-                        Icon(Icons.chevron_right_sharp, color: Colors.red,)
-                      ],
-                    )
-                  );
+                              ),
+                              alignment: Alignment.center,
+                              child: const Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text("View All", style: TextStyle(color: Colors.red ,fontSize: 14,fontWeight: FontWeight.w600),),
+                                  SizedBox(width: 4,),
+                                  Icon(Icons.chevron_right_sharp, color: Colors.red,)
+                                ],
+                              )
+                          ),
+                        );
+                      },);
+                  }
+
+                  if(snapshot.hasError){
+                    return const Icon(Icons.error,color: Colors.red,);
+                  }
+
+                  return Container();
                 },),
               ),
 
@@ -507,7 +540,7 @@ class _UserDashBoardState extends State<UserDashBoard> {
                   physics: const ScrollPhysics(),
                   shrinkWrap: true,
                   itemBuilder: (context, index) {
-                    return index != 8 ? GestureDetector(
+                    return index != 5 ? GestureDetector(
                       onTap: (){
                         Navigator.push(context, MaterialPageRoute(builder: (context) => CateProduct(bookCate: CatName[index])));
                       },
@@ -563,24 +596,29 @@ class _UserDashBoardState extends State<UserDashBoard> {
                               ],
                             )),
                       ),
-                    ) : Container(
-                        margin: const EdgeInsets.symmetric(horizontal: 10),
-                        width: 160,
-                        height: 220,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(14),
+                    ) : GestureDetector(
+                      onTap: (){
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => const CateProduct(bookCate: "All")));
+                      },
+                      child: Container(
+                          margin: const EdgeInsets.symmetric(horizontal: 10),
+                          width: 160,
+                          height: 220,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(14),
 
-                        ),
-                        alignment: Alignment.center,
-                        child: const Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text("View All", style: TextStyle(color: Colors.red ,fontSize: 14,fontWeight: FontWeight.w600),),
-                            SizedBox(width: 4,),
-                            Icon(Icons.chevron_right_sharp, color: Colors.red,)
-                          ],
-                        )
+                          ),
+                          alignment: Alignment.center,
+                          child: const Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text("View All", style: TextStyle(color: Colors.red ,fontSize: 14,fontWeight: FontWeight.w600),),
+                              SizedBox(width: 4,),
+                              Icon(Icons.chevron_right_sharp, color: Colors.red,)
+                            ],
+                          )
+                      ),
                     );
                   },),
               ),
@@ -624,6 +662,8 @@ class _UserDashBoardState extends State<UserDashBoard> {
               const SizedBox(
                 height: 16,
               ),
+
+              // Author
               SizedBox(
                 width: double.infinity,
                 height: 240,
@@ -633,7 +673,7 @@ class _UserDashBoardState extends State<UserDashBoard> {
                   physics: const ScrollPhysics(),
                   shrinkWrap: true,
                   itemBuilder: (context, index) {
-                    return index != 6 ? GestureDetector(
+                    return index != 5 ? GestureDetector(
                       onTap: (){
                         Navigator.push(context, MaterialPageRoute(builder: (context) => CateProduct(bookCate: CatName[index])));
 
