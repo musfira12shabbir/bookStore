@@ -187,7 +187,7 @@ class UserRegisterLogin{
 
     }catch(ex){
      if(context.mounted){
-       ScaffoldMessenger.of(context).showSnackBar( SnackBar(content: Text("Something went wrong $ex"),backgroundColor: Colors.red, margin: EdgeInsets.symmetric(horizontal: 10, vertical: 10),behavior: SnackBarBehavior.floating,));
+       ScaffoldMessenger.of(context).showSnackBar( SnackBar(content: Text("Something went wrong $ex"),backgroundColor: Colors.red, margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),behavior: SnackBarBehavior.floating,));
        Navigator.pop(context);
      }
     }

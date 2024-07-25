@@ -1,4 +1,3 @@
-import 'package:eproject/description_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 
@@ -27,7 +26,7 @@ class _WishListScreenState extends State<WishListScreen> {
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.white,
-        title: Text("Your WishList",style: TextStyle(color: Colors.black),),
+        title: const Text("Your WishList",style: TextStyle(color: Colors.black),),
       ),
       body: ListView.builder(
         itemCount: bookImages.length,
@@ -72,12 +71,12 @@ class _WishListScreenState extends State<WishListScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text("Book Name:",style: TextStyle(color: Colors.grey.shade400,fontSize: 12, fontWeight: FontWeight.w400),),
-                        Text(bookCate[index],style: TextStyle(color: Colors.black,fontSize: 14, fontWeight: FontWeight.w600),),
+                        Text(bookCate[index],style: const TextStyle(color: Colors.black,fontSize: 14, fontWeight: FontWeight.w600),),
                         const SizedBox(
                           height: 8,
                         ),
                         Text("Book Price:",style: TextStyle(color: Colors.grey.shade400,fontSize: 12, fontWeight: FontWeight.w400),),
-                        Text("Book Price Here",style: TextStyle(color: Colors.black,fontSize: 14, fontWeight: FontWeight.w600),),
+                        const Text("Book Price Here",style: TextStyle(color: Colors.black,fontSize: 14, fontWeight: FontWeight.w600),),
                         const SizedBox(
                           height: 8,
                         ),
@@ -87,7 +86,7 @@ class _WishListScreenState extends State<WishListScreen> {
                             const SizedBox(
                               width: 6,
                             ),
-                            Text("1,0000",style: TextStyle(color: Colors.black45,fontSize: 12, fontWeight: FontWeight.w400),),
+                            const Text("1,0000",style: TextStyle(color: Colors.black45,fontSize: 12, fontWeight: FontWeight.w400),),
                           ],
                         )
                       ],

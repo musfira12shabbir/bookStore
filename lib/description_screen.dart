@@ -62,7 +62,7 @@ class _BookDescriptionState extends State<BookDescription> {
               bookID: widget.bookID,
               wishID: const Uuid().v1()
             ), context);
-          }, icon: const Icon(Icons.heart_broken)),
+          }, icon: const Icon(Icons.favorite,color: Colors.red,)),
           const SizedBox(width: 4,)
         ],
       ),
@@ -134,7 +134,7 @@ class _BookDescriptionState extends State<BookDescription> {
                             color: Colors.amber,
                           ),
                           onRatingUpdate: (rating) {
-                            print(rating);
+                            // print(rating);
                           },
                         ),
                         const SizedBox(

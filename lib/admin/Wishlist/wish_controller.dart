@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 
 class WishController{
 
-  final _wishCollection = FirebaseFirestore.instance.collection("Wishlist");
+  final wishCollection = FirebaseFirestore.instance.collection("Wishlist");
 
   void wishAdd(WishModel wishModel, BuildContext context)async{
 
@@ -18,7 +18,7 @@ class WishController{
         "userEmail" : wishModel.userEmail!,
       };
 
-      await _wishCollection..doc(wishModel.wishID).set(wishData);
+      wishCollection..doc(wishModel.wishID).set(wishData);
       if(context.mounted){
         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Book Added to Wishlist"),backgroundColor: Colors.green, margin: EdgeInsets.symmetric(horizontal: 10, vertical: 10),behavior: SnackBarBehavior.floating,));
       }
@@ -31,7 +31,7 @@ class WishController{
   }
 
   Stream<List<WishModel>> wishFetch(String? userEmail){
-    return _wishCollection.where('userEmail',isEqualTo: userEmail).snapshots().map((snapshot){
+    return wishCollection.where('userEmail',isEqualTo: userEmail).snapshots().map((snapshot){
       return snapshot.docs.map((doc){
         Map<String, dynamic> wishData = doc.data();
         return WishModel(
@@ -48,7 +48,7 @@ class WishController{
   void wishDelete(String? wishID, BuildContext context)async{
 
     try{
-      await _wishCollection.doc(wishID).delete();
+      await wishCollection.doc(wishID).delete();
       if(context.mounted){
         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Wish item Removed"),backgroundColor: Colors.red, margin: EdgeInsets.symmetric(horizontal: 10, vertical: 10),behavior: SnackBarBehavior.floating,));
       }
