@@ -2,8 +2,8 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:eproject/about_screen.dart';
 import 'package:eproject/admin/Books/book_controller/book_controller.dart';
 import 'package:eproject/admin/Books/book_model/book_model.dart';
-import 'package:eproject/admin/Books/book_views/fetch_book_screen.dart';
 import 'package:eproject/admin/Cart/cart_fetch.dart';
+import 'package:eproject/admin/UserBillings/fetch_billings.dart';
 import 'package:eproject/admin/Users/user_controller.dart';
 import 'package:eproject/admin/Users/user_model.dart';
 import 'package:eproject/admin/Wishlist/wish_fetch.dart';
@@ -217,14 +217,14 @@ class _UserDashBoardState extends State<UserDashBoard> {
                     GestureDetector(
                       onTap: (){
                         if(context.mounted){
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => const FetchBook(),));
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => const FetchBillings(),));
                         }
                       },
                       child: Container(
                         margin: const EdgeInsets.symmetric(vertical: 10),
                         child: const ListTile(
                           leading: Icon(Iconsax.user,color: Colors.white,),
-                          title: Text("Books",style: TextStyle(color: Colors.white),),
+                          title: Text("Billings",style: TextStyle(color: Colors.white),),
                         ),
                       ),
                     ),
