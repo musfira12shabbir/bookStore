@@ -3,6 +3,7 @@ import 'package:eproject/about_screen.dart';
 import 'package:eproject/admin/Books/book_controller/book_controller.dart';
 import 'package:eproject/admin/Books/book_model/book_model.dart';
 import 'package:eproject/admin/Cart/cart_fetch.dart';
+import 'package:eproject/admin/Order/fetch_order.dart';
 import 'package:eproject/admin/UserBillings/fetch_billings.dart';
 import 'package:eproject/admin/Users/user_controller.dart';
 import 'package:eproject/admin/Users/user_model.dart';
@@ -210,6 +211,21 @@ class _UserDashBoardState extends State<UserDashBoard> {
                         child: const ListTile(
                           leading: Icon(Iconsax.call, color: Colors.white),
                           title: Text("About Us", style: TextStyle(color: Colors.white)),
+                        ),
+                      ),
+                    ),
+
+                    GestureDetector(
+                      onTap: (){
+                        if(context.mounted){
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => const FetchOrder(),));
+                        }
+                      },
+                      child: Container(
+                        margin: const EdgeInsets.symmetric(vertical: 10),
+                        child: const ListTile(
+                          leading: Icon(Iconsax.user,color: Colors.white,),
+                          title: Text("Order History",style: TextStyle(color: Colors.white),),
                         ),
                       ),
                     ),

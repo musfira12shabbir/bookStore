@@ -1,8 +1,11 @@
 import 'dart:async';
 import 'package:eproject/admin/Cart/cart_controller.dart';
 import 'package:eproject/admin/Cart/cart_model.dart';
+import 'package:eproject/admin/Order/order_controller.dart';
+import 'package:eproject/admin/Order/order_model.dart';
 import 'package:eproject/admin/Users/user_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:uuid/uuid.dart';
 
 
 class CartFetch extends StatefulWidget {
@@ -15,10 +18,13 @@ class CartFetch extends StatefulWidget {
 class _CartFetchState extends State<CartFetch> {
 
   CartController cartController = CartController();
+  OrderController orderController = OrderController();
 
   String uEmail = "";
 
   List cartPrice = [];
+
+  List orderItem = [];
 
   int tPrice = 0;
 
@@ -81,6 +87,13 @@ class _CartFetchState extends State<CartFetch> {
                    String cartID = cartData.cartID!;
 
                    cartPrice.add(int.parse(totalPrice));
+                    orderItem.add({
+                      "bookName" : bookName,
+                      "bookImage" : bookImage,
+                      "bookQuantity" : bookQuantity,
+                      "totalPrice" : totalPrice,
+                    });
+
 
 
 
@@ -182,15 +195,26 @@ class _CartFetchState extends State<CartFetch> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Container(
-                    width: 120,
-                    height: 40,
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                        color: Colors.black,
-                        borderRadius: BorderRadius.circular(10)
-                    ),
-                    child: const Text("Buy Now",style: TextStyle(color: Colors.white,fontSize: 12,fontWeight: FontWeight.w400),) ),
+                GestureDetector(
+                  onTap: (){
+                    orderController.addOrder(OrderModel(
+                      orderID: const Uuid().v1(),
+                      orderStatus: "pending",
+                      totalPrice: "$tPrice",
+                      userEmail: uEmail,
+                      orderItem: orderItem
+                    ), context);
+                  },
+                  child: Container(
+                      width: 120,
+                      height: 40,
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                          color: Colors.black,
+                          borderRadius: BorderRadius.circular(10)
+                      ),
+                      child: const Text("Buy Now",style: TextStyle(color: Colors.white,fontSize: 12,fontWeight: FontWeight.w400),) ),
+                ),
                 const Text("*T & C Applied*",style: TextStyle(color: Colors.black54,fontSize: 12, fontWeight: FontWeight.w800),),
               ],
             )
