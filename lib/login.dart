@@ -76,6 +76,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           margin: const EdgeInsets.symmetric(horizontal: 10),
                           child: TextFormField(
                             controller: userPassword,
+                            obscureText: true,
                             style: const TextStyle(color: Colors.white), // Set text color to white
                             decoration: InputDecoration(
                               prefixIcon: const Icon(Iconsax.key1, color: Colors.white),

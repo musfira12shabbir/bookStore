@@ -24,9 +24,10 @@ class _CartFetchState extends State<CartFetch> {
 
   List cartPrice = [];
 
-  List orderItem = [];
 
   int tPrice = 0;
+
+  bool isAdded = false;
 
   void calculator(){
     for(int x in cartPrice){
@@ -53,6 +54,8 @@ class _CartFetchState extends State<CartFetch> {
   }
   @override
   Widget build(BuildContext context) {
+    List orderItem = [];
+
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -87,12 +90,16 @@ class _CartFetchState extends State<CartFetch> {
                    String cartID = cartData.cartID!;
 
                    cartPrice.add(int.parse(totalPrice));
-                    orderItem.add({
-                      "bookName" : bookName,
-                      "bookImage" : bookImage,
-                      "bookQuantity" : bookQuantity,
-                      "totalPrice" : totalPrice,
-                    });
+                   orderItem.add({
+                             "bookName" : bookName,
+                             "bookImage" : bookImage,
+                             "bookQuantity" : bookQuantity,
+                             "totalPrice" : totalPrice,
+                           });
+
+
+
+                     debugPrint("${orderItem}");
 
 
 
@@ -204,6 +211,7 @@ class _CartFetchState extends State<CartFetch> {
                       userEmail: uEmail,
                       orderItem: orderItem
                     ), context);
+
                   },
                   child: Container(
                       width: 120,
