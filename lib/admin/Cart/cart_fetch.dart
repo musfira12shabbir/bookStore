@@ -81,7 +81,7 @@ class _CartFetchState extends State<CartFetch> {
                 itemBuilder: (context, index) {
                   CartModel cartData = snapshot.data![index];
 
-                  // String bookID = cartData.bookID!;
+                  String bookID = cartData.bookID!;
                   String bookName = cartData.bookName!;
                   String bookImage = cartData.bookImage!;
                   String bookQuantity = cartData.bookQuantity!;
@@ -91,16 +91,12 @@ class _CartFetchState extends State<CartFetch> {
 
                    cartPrice.add(int.parse(totalPrice));
                    orderItem.add({
+                              "bookID" : bookID,
                              "bookName" : bookName,
                              "bookImage" : bookImage,
                              "bookQuantity" : bookQuantity,
                              "totalPrice" : totalPrice,
                            });
-
-
-
-                     debugPrint("${orderItem}");
-
 
 
 
@@ -211,7 +207,7 @@ class _CartFetchState extends State<CartFetch> {
                       userEmail: uEmail,
                       orderItem: orderItem
                     ), context);
-
+                    cartController.clearCartData(uEmail);
                   },
                   child: Container(
                       width: 120,

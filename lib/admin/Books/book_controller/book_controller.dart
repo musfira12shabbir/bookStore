@@ -186,7 +186,27 @@ class BookController{
      }
    }
 
-   void deleteBook(String? bookID, String bookImageUrl,BuildContext context)async{
+  void addReview(String? bookID, BuildContext context, List? reviewData)async{
+    try{
+
+      Map<String, dynamic> addReview = {
+        "reviews" : reviewData
+      };
+
+      await collectionReference.doc(bookID).update(addReview);
+      if(context.mounted){
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Review Added Successfully"),backgroundColor: Colors.green, margin: EdgeInsets.symmetric(horizontal: 10, vertical: 10),behavior: SnackBarBehavior.floating,));
+        Navigator.pop(context);
+      }
+    } catch(ex){
+      if(context.mounted){
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Something went wrong"),backgroundColor: Colors.red, margin: EdgeInsets.symmetric(horizontal: 10, vertical: 10),behavior: SnackBarBehavior.floating,));
+      }
+    }
+  }
+
+
+  void deleteBook(String? bookID, String bookImageUrl,BuildContext context)async{
      try{
        await FirebaseStorage.instance.refFromURL(bookImageUrl).delete();
        await collectionReference.doc(bookID).delete();

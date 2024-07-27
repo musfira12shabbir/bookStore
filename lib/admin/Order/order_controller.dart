@@ -29,8 +29,29 @@ class OrderController{
 
   }
 
-  Stream<List<OrderModel>> fetchOrder(String uEmail){
+  Stream<List<OrderModel>> fetchOrder(String uEmail, String status){
     return _orderCollection.where('userEmail', isEqualTo: uEmail).snapshots().map((snapshot){
+      return snapshot.docs.map((doc){
+        Map<String, dynamic> orderData = doc.data() as Map<String, dynamic>;
+        return OrderModel(
+            orderID: orderData['orderID'],
+            totalPrice: orderData['totalPrice'],
+            userEmail: orderData['userEmail'],
+            orderStatus: orderData['orderStatus'],
+            orderItem: orderData['orderItem'],
+        );
+      }).where((order) {
+        if (status == null || status.isEmpty) {
+          return true;
+        } else {
+          return order.orderStatus!.toLowerCase().contains(status.toLowerCase());
+        }
+      }).toList();
+    });
+  }
+
+  Stream<List<OrderModel>> fetchAllOrder(){
+    return _orderCollection.snapshots().map((snapshot){
       return snapshot.docs.map((doc){
         Map<String, dynamic> orderData = doc.data() as Map<String, dynamic>;
         return OrderModel(
@@ -43,6 +64,8 @@ class OrderController{
       }).toList();
     });
   }
+
+
 
   void updateOrder(OrderModel oModel, BuildContext context){
     try{

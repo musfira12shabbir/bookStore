@@ -69,4 +69,29 @@ class CartController{
   }
 
 
+  Future<void> clearCartData(String userEmail) async {
+
+    final FirebaseFirestore fireStore = FirebaseFirestore.instance;
+
+    try {
+      // Query to find all documents where 'userEmail' matches
+      final querySnapshot = await _cartCollection.where('userEmail', isEqualTo: userEmail).get();
+
+      if (querySnapshot.docs.isEmpty) {
+        return;
+      }
+
+      // Delete all matching documents in the cart collection
+      final batch = fireStore.batch();
+      for (var doc in querySnapshot.docs) {
+        batch.delete(doc.reference);
+      }
+
+      await batch.commit();
+    } catch (e) {
+    }
+  }
+
+
+
 }

@@ -38,7 +38,7 @@ dependencies:
   firebase_core:
   cloud_firestore:
   image_picker:
-  uuid: ^4.4.2
+  uuid:
   iconsax:
   shared_preferences:
   achievement_view:
@@ -46,9 +46,9 @@ dependencies:
   firebase_auth:
   carousel_slider:
   flutter_rating_bar:
-  firebase_storage: ^11.6.0
-  google_generative_ai: ^0.4.3
-
+  firebase_storage:
+  google_generative_ai:
+  web: ^0.4.0
 dev_dependencies:
   flutter_test:
     sdk: flutter
