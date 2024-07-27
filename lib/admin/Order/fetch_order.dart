@@ -24,8 +24,7 @@ class _FetchOrderState extends State<FetchOrder> {
   final TextEditingController reviewController = TextEditingController();
   var userRate = "";
 
-  List reviewData = [];
-  
+
   @override
   void initState() {
     // TODO: implement initState
@@ -181,12 +180,7 @@ class _FetchOrderState extends State<FetchOrder> {
                                       const SizedBox(height: 10,),
 
                                       ElevatedButton(onPressed: (){
-                                        reviewData.add({
-                                          "userEmail" : uEmail,
-                                          "rating" : userRate,
-                                          "review" : reviewController.text
-                                        });
-                                        _bookController.addReview(orderDetails[index]['bookID'], context, reviewData);
+                                        _bookController.addReviewToBook(orderDetails[index]['bookID'], reviewController.text, userRate, uEmail, context);
                                       }, child: const Text("Add Review"))
                                     ],
                                   );

@@ -1,5 +1,5 @@
 import 'package:eproject/firebase_options.dart';
-import 'package:eproject/splash_screen.dart';
+import 'package:eproject/UserPages/splash_screen.dart';
 
 
 import 'package:firebase_core/firebase_core.dart';

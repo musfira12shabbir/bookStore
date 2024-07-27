@@ -1,5 +1,5 @@
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:eproject/about_screen.dart';
+import 'package:eproject/InfoScreen/about_screen.dart';
 import 'package:eproject/admin/Books/book_controller/book_controller.dart';
 import 'package:eproject/admin/Books/book_model/book_model.dart';
 import 'package:eproject/admin/Cart/cart_fetch.dart';
@@ -9,14 +9,14 @@ import 'package:eproject/admin/Users/user_controller.dart';
 import 'package:eproject/admin/Users/user_model.dart';
 import 'package:eproject/admin/Wishlist/wish_fetch.dart';
 import 'package:eproject/constants/cate_product.dart';
-import 'package:eproject/description_screen.dart';
-import 'package:eproject/profile_screen.dart';
+import 'package:eproject/UserBookScreen/description_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
-import 'contact_screen.dart';
+import '../UserPages/profile_screen.dart';
+import '../InfoScreen/contact_screen.dart';
 
 
 class UserDashBoard extends StatefulWidget {

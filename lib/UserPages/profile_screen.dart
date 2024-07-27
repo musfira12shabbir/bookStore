@@ -1,7 +1,8 @@
 import 'package:eproject/admin/Users/user_controller.dart';
 import 'package:eproject/admin/Users/user_model.dart';
-import 'package:eproject/update_screen.dart';
 import 'package:flutter/material.dart';
+
+import 'update_screen.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});

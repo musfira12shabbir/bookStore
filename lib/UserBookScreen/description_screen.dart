@@ -7,7 +7,7 @@ import 'package:flutter/scheduler.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:uuid/uuid.dart';
 
-import 'admin/Wishlist/wish_model.dart';
+import '../admin/Wishlist/wish_model.dart';
 
 class BookDescription extends StatefulWidget {
 

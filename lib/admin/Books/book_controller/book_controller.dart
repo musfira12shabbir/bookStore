@@ -186,24 +186,41 @@ class BookController{
      }
    }
 
-  void addReview(String? bookID, BuildContext context, List? reviewData)async{
-    try{
+  Future<void> addReviewToBook(String bookId, String newReview, String rating, String userEmail, BuildContext context) async {
+    final bookRef = FirebaseFirestore.instance.collection('Books').doc(bookId);
 
-      Map<String, dynamic> addReview = {
-        "reviews" : reviewData
-      };
+    try {
+      // Fetch the current document
+      final docSnapshot = await bookRef.get();
 
-      await collectionReference.doc(bookID).update(addReview);
-      if(context.mounted){
-        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Review Added Successfully"),backgroundColor: Colors.green, margin: EdgeInsets.symmetric(horizontal: 10, vertical: 10),behavior: SnackBarBehavior.floating,));
-        Navigator.pop(context);
+      if (docSnapshot.exists) {
+        final data = docSnapshot.data();
+        final List<dynamic> reviews = data?['reviews'] ?? [];
+
+        // Add the new review and rating to the list
+        reviews.add({
+          'review': newReview,
+          'rating': rating,
+          'userEmail' : userEmail
+        });
+
+        // Update the document with the new review list
+        await bookRef.update({'review': reviews});
+        if(context.mounted){
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Review Added Successfully"),backgroundColor: Colors.green, margin: EdgeInsets.symmetric(horizontal: 10, vertical: 10),behavior: SnackBarBehavior.floating,));
+          Navigator.pop(context);
+        }
+      } else {
+        if(context.mounted){
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Something went wrong"),backgroundColor: Colors.red, margin: EdgeInsets.symmetric(horizontal: 10, vertical: 10),behavior: SnackBarBehavior.floating,));
+        }
       }
-    } catch(ex){
+    } catch (e) {
       if(context.mounted){
         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Something went wrong"),backgroundColor: Colors.red, margin: EdgeInsets.symmetric(horizontal: 10, vertical: 10),behavior: SnackBarBehavior.floating,));
-      }
-    }
+      }    }
   }
+
 
 
   void deleteBook(String? bookID, String bookImageUrl,BuildContext context)async{
