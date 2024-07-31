@@ -1,4 +1,5 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:eproject/AIChatBot/chatbot.dart';
 import 'package:eproject/InfoScreen/about_screen.dart';
 import 'package:eproject/admin/Books/book_controller/book_controller.dart';
 import 'package:eproject/admin/Books/book_model/book_model.dart';
@@ -12,8 +13,11 @@ import 'package:eproject/constants/cate_product.dart';
 import 'package:eproject/UserBookScreen/description_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:google_generative_ai/google_generative_ai.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+
+
 
 import '../UserPages/profile_screen.dart';
 import '../InfoScreen/contact_screen.dart';
@@ -78,6 +82,37 @@ class _UserDashBoardState extends State<UserDashBoard> {
   ];
 
   List newToShellName = ["Good Omens","George Orwell","Perdido Station","Mistborn","Lies LockeLamora","A Game of Thrones"];
+
+
+  final TextEditingController userPrompt = TextEditingController();
+  final List<Message> messages = [];
+  final ScrollController _scrollController = ScrollController();
+
+  void chatBot() async {
+    final model = GenerativeModel(
+      model: 'gemini-1.5-flash-latest',
+      apiKey: 'AIzaSyB6PqgEB9f6focNpYCXRNx-t_BWuczx4qs',
+    );
+
+    final prompt = userPrompt.text;
+    setState(() {
+      messages.add(Message(text: prompt, isUser: true));
+    });
+    userPrompt.clear();
+
+    final content = [Content.text(prompt)];
+    final response = await model.generateContent(content);
+    String? userResponse = response.text;
+
+    setState(() {
+      messages.add(Message(text: userResponse ?? 'Error', isUser: false));
+    });
+
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _scrollController.jumpTo(_scrollController.position.maxScrollExtent);
+    });
+  }
 
 
   UserRegisterLogin userRegisterLogin = UserRegisterLogin();
@@ -772,6 +807,110 @@ class _UserDashBoardState extends State<UserDashBoard> {
           ),
         ),
       ),
+      floatingActionButton: FloatingActionButton(onPressed: (){
+
+       showModalBottomSheet(
+         isScrollControlled: true,
+         context: context, builder: (context) {
+         return  StatefulBuilder(builder: (context, setState) {
+           return SizedBox(
+             height: 600,
+             child: Column(
+               children: [
+                 Expanded(
+                   child: ListView.builder(
+                     controller: _scrollController,
+                     reverse:
+                     false,
+                     itemCount: messages.length,
+                     itemBuilder: (context, index) {
+                       final message = messages[index];
+                       return Align(
+                         alignment: message.isUser
+                             ? Alignment.centerRight
+                             : Alignment.centerLeft,
+                         child: Container(
+                           margin:
+                           const EdgeInsets.symmetric(vertical: 4, horizontal: 10),
+                           padding: const EdgeInsets.symmetric(
+                               vertical: 10, horizontal: 15),
+                           decoration: BoxDecoration(
+                             color: message.isUser
+                                 ? Colors.white
+                                 : Colors.grey[
+                             800],
+                             borderRadius: BorderRadius.only(
+                               topLeft: const Radius.circular(15),
+                               topRight: const Radius.circular(15),
+                               bottomLeft:
+                               message.isUser ? const Radius.circular(15) : Radius.zero,
+                               bottomRight:
+                               message.isUser ? Radius.zero : const Radius.circular(15),
+                             ),
+                           ),
+                           child: Text(
+                             message.text,
+                             style: TextStyle(
+                               color: message.isUser
+                                   ? Colors.black
+                                   : Colors.white,
+                             ),
+                           ),
+                         ),
+                       );
+                     },
+                   ),
+                 ),
+                 Padding(
+                   padding: const EdgeInsets.all(8.0),
+                   child: Row(
+                     children: [
+                       Expanded(
+                         child: TextField(
+                           controller: userPrompt,
+                           style: const TextStyle(
+                               color: Colors.white
+                           ),
+                           decoration: InputDecoration(
+                             hintText: 'Type your message...',
+                             hintStyle:
+                             TextStyle(color: Colors.grey[500]),
+                             border: OutlineInputBorder(
+                               borderRadius: BorderRadius.circular(30),
+                               borderSide: BorderSide.none,
+                             ),
+                             filled: true,
+                             fillColor:
+                             Colors.grey[900],
+
+                           ),
+                         ),
+                       ),
+                       const SizedBox(width: 8),
+                       IconButton(
+                         icon: const Icon(Icons.send,
+                             color: Colors.black),
+                         onPressed: chatBot,
+                       ),
+                     ],
+                   ),
+                 ),
+               ],
+             ),
+           );
+         },);
+       },);
+
+      },child: Container(
+        width: 40 ,
+        height: 40,
+        alignment: Alignment.center,
+        decoration: const BoxDecoration(
+          shape: BoxShape.circle,
+          color: Colors.green
+        ),
+        child: const Icon(Icons.rocket),
+      )),
     );
   }
 }
