@@ -1,5 +1,8 @@
+import 'dart:math';
+
 import 'package:eproject/admin/Users/user_model.dart';
 import 'package:eproject/UserBookScreen/user_dashboard.dart';
+import 'package:eproject/admin/admin_dashboard.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -67,25 +70,36 @@ class UserRegisterLogin{
 
 
   void userLogin(LoginModel logModel, BuildContext context)async {
-    try {
-      await FirebaseAuth.instance.signInWithEmailAndPassword(email: logModel.userEmail!, password: logModel.userPassword!);
-      SharedPreferences userCred = await SharedPreferences.getInstance();
-      userCred.setString("email", logModel.userEmail!);
+    if(logModel.userEmail == "admin@gmial.com" && logModel.userPassword == "123"){
       if(context.mounted){
         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
           content: Text("Login Successful"),
           backgroundColor: Colors.green,
           margin: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
           behavior: SnackBarBehavior.floating,));
-        Navigator.push(context, MaterialPageRoute(builder:  (context) => const UserDashBoard(),));
+        Navigator.push(context, MaterialPageRoute(builder:  (context) => const AdminDash(),));
       }
-    } on FirebaseAuthException catch (ex) {
-      if (context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-          content: Text("Something went Wrong"),
-          backgroundColor: Colors.red,
-          margin: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-          behavior: SnackBarBehavior.floating,));
+    }else{
+      try {
+        await FirebaseAuth.instance.signInWithEmailAndPassword(email: logModel.userEmail!, password: logModel.userPassword!);
+        SharedPreferences userCred = await SharedPreferences.getInstance();
+        userCred.setString("email", logModel.userEmail!);
+        if(context.mounted){
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+            content: Text("Login Successful"),
+            backgroundColor: Colors.green,
+            margin: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+            behavior: SnackBarBehavior.floating,));
+          Navigator.push(context, MaterialPageRoute(builder:  (context) => const UserDashBoard(),));
+        }
+      } on FirebaseAuthException catch (ex) {
+        if (context.mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+            content: Text("Something went Wrong"),
+            backgroundColor: Colors.red,
+            margin: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+            behavior: SnackBarBehavior.floating,));
+        }
       }
     }
   }
@@ -118,6 +132,23 @@ class UserRegisterLogin{
           userAge: data['uAge'],
           userID: data['uID'],
           getImage: data['uImage']
+        );
+      }).toList();
+    });
+  }
+
+  Stream<List<UserModel>> getAllUser() {
+    return FirebaseFirestore.instance.collection("userData").snapshots().map((snapshot) {
+      return snapshot.docs.map((doc) {
+        Map<String, dynamic> data = doc.data();
+        return UserModel(
+            userName: data['uName'],
+            userPassword: data['uPassword'],
+            userEmail: data['uEmail'],
+            userAddress: data['uAddress'],
+            userAge: data['uAge'],
+            userID: data['uID'],
+            getImage: data['uImage']
         );
       }).toList();
     });
